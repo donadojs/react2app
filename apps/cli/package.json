@@ -1,11 +1,25 @@
 {
-  "name": "cli",
-  "version": "0.0.0",
-  "private": true,
+  "name": "react2app",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": "./dist/bin/index.js",
+  "bin": {
+    "react2app": "./dist/bin/index.js"
+  },
   "scripts": {
-    "dev": "echo 'Add dev script here'",
-    "build": "echo 'Add build script here'",
-    "test": "echo 'Add test script here'",
-    "lint": "echo 'Add lint script here'"
+    "build": "tsc",
+    "dev": "tsc -w",
+    "start": "node dist/bin/index.js"
+  },
+  "dependencies": {
+    "commander": "^11.1.0",
+    "chalk": "^5.3.0",
+    "inquirer": "^9.2.12"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.0",
+    "@types/inquirer": "^9.0.7",
+    "@repo/typescript-config": "workspace:*"
   }
 }
