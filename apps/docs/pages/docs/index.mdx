@@ -1,0 +1,91 @@
+# react2app Installation
+
+A react2app is a powerful tool for transforming React or Next.js applications into IOS, Android apps.\
+Let's walk through everything you need to know to make your first app.
+
+## Before You Begin
+
+Make sure you have these installed on your computer:
+
+- Node.js (version 14.0.0+)
+- npm (version 6.14.0+)
+- A modern web browser (Chrome, Firefox, Safari, or Edge)
+
+Not sure if you have them? Open your terminal and type:
+
+```bash
+node --version
+npm --version
+```
+
+## Quick Start Guide
+
+### Step 1: Start Development Server
+
+You can test your app right away with 'react2app' app in AppStore, PlayStore.
+
+```bash
+npx react2app dev
+```
+
+This command will:
+
+- Setup default values that you will need for generating app (react2app.config.js).
+- Transform your React project into IOS, Android app.
+- Show your app at http://localhost:3000
+
+### Step 2: Build Your App
+
+You can make the file you will need to upload to AppStore, PlayStore.
+
+```bash
+npx react2app build
+```
+
+This will:
+
+- Create an IOS/Android production build of your app
+- The result of your transformation
+- Get your app ready for deployment
+
+### Step 3: Deploy
+
+Time to share your app with the world!
+
+```bash
+npx react2app deploy
+```
+
+This command takes care of:
+
+- Upload your app(build that we made before) to AppStore, PlayStore
+- We will help you fill out the form for AppStore, PlayStore
+
+## Customizing Your Setup
+
+Want to change some settings? Create a file called `react2app.config.js` in your project folder:
+
+```javascript
+module.exports = {
+  port: 3000, // Change the port number
+  output: "build", // Change build folder name
+  publicPath: "/", // Change public URL path
+  // Add any other settings you need
+};
+```
+
+## Need More Help?
+
+We're here to support you! Check out:
+
+- [Documentation](https://react2app.dev/docs) - Full guides and API reference
+- [GitHub](https://github.com/react2app) - Source code and issue tracking
+- [Community Forum](https://react2app.dev/community) - Get help from other developers
+
+## What's Next?
+
+Now that you've got the basics down, try:
+
+- Adding new features to your app
+- Exploring advanced configurations
+- Joining our community to share your experience
