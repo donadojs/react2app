@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Logo from "./Logo";
-import { Menu, X, Terminal, CheckCircle2 } from "lucide-react";
+import { Menu, X, Terminal, Check } from "lucide-react";
 
 const TypewriterText = ({ text, delay, onComplete }) => {
   const [currentText, setCurrentText] = useState("");
@@ -25,6 +25,7 @@ const CommandTerminal = () => {
   const [activeCommand, setActiveCommand] = useState(0);
   const [completedCommands, setCompletedCommands] = useState([]);
   const [visibleCommands, setVisibleCommands] = useState([]);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const commands = [
     {
@@ -42,30 +43,39 @@ const CommandTerminal = () => {
   ];
 
   const resetAnimation = () => {
-    // Clear all commands with a fade out effect
+    if (isProcessing) return;
+    setIsProcessing(true);
+
     setVisibleCommands([]);
     setCompletedCommands([]);
 
-    // Start new cycle after a short delay
     setTimeout(() => {
       setActiveCommand(0);
       setVisibleCommands([0]);
-    }, 500);
+      setIsProcessing(false);
+    }, 200);
   };
 
   const handleCommandComplete = (index) => {
+    if (isProcessing) return;
+    setIsProcessing(true);
+
     setTimeout(() => {
       setCompletedCommands((prev) => [...prev, index]);
-      setActiveCommand(index + 1);
-      setVisibleCommands((prev) => [...prev, index + 1]);
-      if (index === commands.length - 1) {
-        setTimeout(resetAnimation, 2000);
-      }
-    }, 800);
+
+      setTimeout(() => {
+        setActiveCommand(index + 1);
+        setVisibleCommands((prev) => [...prev, index + 1]);
+
+        if (index === commands.length - 1) {
+          setTimeout(resetAnimation, 2000);
+        }
+        setIsProcessing(false);
+      }, 1000);
+    }, 500);
   };
 
   useEffect(() => {
-    // Initialize first command
     setVisibleCommands([0]);
   }, []);
 
@@ -78,14 +88,11 @@ const CommandTerminal = () => {
           <div className="w-2 h-2 rounded-full bg-green-500/80" />
         </div>
       </div>
-      <div className="p-4 font-mono text-sm ">
+      <div className="p-4 font-mono text-sm">
         {commands.map(
           (command, index) =>
             visibleCommands.includes(index) && (
-              <div
-                key={index}
-                className="mb-4 last:mb-0 transition-all duration-500"
-              >
+              <div key={index} className="mb-4 last:mb-0">
                 <div className="flex items-center space-x-2 text-gray-300">
                   <span className="text-purple-400">$</span>
                   {index === activeCommand ? (
@@ -97,19 +104,26 @@ const CommandTerminal = () => {
                   ) : (
                     <span className="flex items-center gap-2">
                       {command.cmd}
-                      {completedCommands.includes(index) && (
-                        <CheckCircle2 className="w-3 h-3 text-green-400" />
-                      )}
                     </span>
                   )}
+                  <Check
+                    className={`
+                          w-4 h-4 text-green-400 transition-opacity duration-300
+                          ${completedCommands.includes(index) ? "opacity-100" : "opacity-0"}
+                        `}
+                  />
                 </div>
-                {completedCommands.includes(index) && (
-                  <div className="mt-1 text-gray-500 text-sm">
-                    {command.response.map((res) => (
-                      <div key={res}>{res}</div>
-                    ))}
-                  </div>
-                )}
+
+                <div className="mt-1 text-gray-500 text-sm transition-all duration-1000">
+                  {command.response.map((res) => (
+                    <div
+                      className={`transition-opacity duration-200 ${completedCommands.includes(index) ? "opacity-100" : "opacity-0"}`}
+                      key={res}
+                    >
+                      {res}
+                    </div>
+                  ))}
+                </div>
               </div>
             )
         )}
@@ -125,8 +139,6 @@ const LandingPage = () => {
     <div className="overflow-hidden flex flex-col h-[calc(100%_-_4rem)]">
       <nav className="w-full z-50">
         <div className="max-w-4xl mx-auto px-4">
-          {" "}
-          {/* Reduced from max-w-5xl to match content width */}
           <div className="flex items-center justify-between h-20 lg:mt-4">
             <a href="/">
               <Logo />
@@ -192,9 +204,10 @@ const LandingPage = () => {
               <h1 className="text-4xl mt-8 md:text-5xl font-bold tracking-tight mb-6 bg-gradient-to-r from-gray-900 to-gray-700 text-transparent bg-clip-text">
                 React to App in 3 commands
               </h1>
-              <p className="text-gray-600 max-w-lg mx-auto mb-0 text-lg">
-                Transform your React.js, Next.js project <br /> into IOS,
-                Android apps with just 3 commands
+              <p className="text-gray-600  mx-auto mb-0 text-lg max-w-[320px] lg:max-w-[400px] lg:w-[400px]">
+                Transform React, Next.js app {""}
+                <br className="hidden lg:block" />
+                into IOS, Android apps with just 3 commands
               </p>
             </div>
             <div className="w-full max-w-2xl mx-auto">
