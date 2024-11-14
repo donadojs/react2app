@@ -1,7 +1,7 @@
 {
   "name": "@react2app/expo-template",
   "main": "expo-router/entry",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "author": "donadojs",
   "license": "MIT",
   "scripts": {
