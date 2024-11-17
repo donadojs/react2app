@@ -61,6 +61,13 @@ export const getPaths = () => {
     reactProjectRootDir: path.resolve(rootDir),
     R2ARootDir: path.resolve(rootDir, R2A_DIR_NAME),
     expoRootDir: path.resolve(rootDir, R2A_DIR_NAME, EXPO_DIR_NAME),
+    iosRootDir: path.resolve(rootDir, R2A_DIR_NAME, EXPO_DIR_NAME, "ios"),
+    androidRootDir: path.resolve(
+      rootDir,
+      R2A_DIR_NAME,
+      EXPO_DIR_NAME,
+      "android"
+    ),
     expoEnvFilePath: path.resolve(rootDir, R2A_DIR_NAME, EXPO_DIR_NAME, ".env"),
     R2AConfigPath: path.resolve(rootDir, R2A_CONFIG_FILENAME),
     R2ACLIRootDir,

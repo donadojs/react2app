@@ -7,3 +7,10 @@ export const REACT_FRAMEWORK = {
 
 export type ReactFramework =
   (typeof REACT_FRAMEWORK)[keyof typeof REACT_FRAMEWORK];
+
+export const PLATFORM = {
+  IOS: "ios",
+  ANDROID: "android",
+} as const;
+
+export type Platform = (typeof PLATFORM)[keyof typeof PLATFORM];

@@ -8,18 +8,22 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "pnpm copy-templates && tsc -w ",
+    "dev": "pnpm copy-data && tsc -w ",
     "start": "node dist/bin/index.js",
-    "copy-templates": "copyfiles -u 1 \"templates/**/*\" dist/templates"
+    "copy-data": "pnpm copy-templates && pnpm copy-fastlane",
+    "copy-templates": "copyfiles -u 1 \"templates/**/*\" dist/templates",
+    "copy-fastlane": "copyfiles -u 1 \"fastlane/**/*\" dist/fastlane"
   },
   "dependencies": {
     "@types/fs-extra": "^11.0.4",
+    "@types/inquirer-autocomplete-prompt": "^3.0.3",
     "ansi-colors": "^4.1.3",
     "chalk": "^5.3.0",
     "cli-progress": "^3.12.0",
     "commander": "^11.1.0",
     "fs-extra": "^11.2.0",
     "inquirer": "^9.2.12",
+    "inquirer-autocomplete-prompt": "^3.0.1",
     "ora": "^8.1.1",
     "progress": "^2.0.3",
     "qrcode-terminal": "^0.12.0"

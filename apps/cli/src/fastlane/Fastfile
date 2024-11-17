@@ -1,0 +1,50 @@
+# src/fastlane/Fastfile
+default_platform(:ios)
+
+platform :ios do
+  desc "Build iOS app for personal development"
+  lane :build_dev do
+
+    gym(
+      workspace: "#{ENV['APP_NAME']}.xcworkspace",
+      scheme: "#{ENV['APP_NAME']}",
+      clean: true,
+      configuration: "Debug",
+      export_method: "development",
+      output_directory: "./build",
+      output_name: "#{ENV['APP_NAME']}.ipa",
+      include_bitcode: false,
+      include_symbols: true,
+      skip_profile_detection: true,
+      export_options: {
+        method: "development",
+        signing_style: "automatic",
+        compile_bitcode: false
+      }
+    )
+  end
+
+  desc "Build release iOS app"
+  lane :build do    
+    update_project_team(
+      path: "#{ENV['APP_NAME']}.xcodeproj",
+      teamid: "YOUR_TEAM_ID"  # 여기에 팀 ID 입력
+    )
+    
+    gym(
+      workspace: "#{ENV['APP_NAME']}.xcworkspace",
+      scheme: "#{ENV['APP_NAME']}",
+      clean: true,
+      configuration: "Release",
+      export_method: "app-store",
+      output_directory: "./build",
+      output_name: "#{ENV['APP_NAME']}.ipa",
+      include_bitcode: false,
+      include_symbols: true,
+      export_options: {
+        method: "app-store",
+        signing_style: "automatic", 
+      }
+    )
+  end
+end
