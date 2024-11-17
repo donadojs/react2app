@@ -80,7 +80,7 @@ const CommandTerminal = () => {
   }, []);
 
   return (
-    <div className="bg-black rounded-xl shadow-2xl overflow-hidden border border-gray-800 min-h-[300px]">
+    <div className="bg-black rounded-xl shadow-2xl overflow-hidden border border-gray-800 min-h-[320px]">
       <div className="flex items-center justify-between px-4 py-3 bg-gray-900">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-red-500/80" />
@@ -201,7 +201,7 @@ const LandingPage = () => {
         <div className="max-w-4xl mx-auto px-4 w-full">
           <div className="grid grid-cols-1 gap-12">
             <div className="text-center">
-              <h1 className="text-4xl mt-8 md:text-5xl font-bold tracking-tight mb-6 bg-gradient-to-r from-gray-900 to-gray-700 text-transparent bg-clip-text">
+              <h1 className="text-3xl mt-8 md:text-5xl font-bold tracking-tight mb-6 bg-gradient-to-r from-gray-900 to-gray-700 text-transparent bg-clip-text">
                 React to App in 3 commands
               </h1>
               <p className="text-gray-600  mx-auto mb-0 text-lg max-w-[320px] lg:max-w-[400px] lg:w-[400px]">
@@ -210,7 +210,7 @@ const LandingPage = () => {
                 into IOS, Android apps with just 3 commands
               </p>
             </div>
-            <div className="w-full max-w-2xl mx-auto">
+            <div className="w-full max-w-xl mx-auto">
               <CommandTerminal />
             </div>
           </div>
