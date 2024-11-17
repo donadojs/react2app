@@ -202,7 +202,7 @@ const LandingPage = () => {
           <div className="grid grid-cols-1 gap-12">
             <div className="text-center">
               <h1 className="text-3xl mt-8 md:text-5xl font-bold tracking-tight mb-6 bg-gradient-to-r from-gray-900 to-gray-700 text-transparent bg-clip-text">
-                React to App in 3 commands
+                React to App in <br className="md:hidden" />3 commands
               </h1>
               <p className="text-gray-600  mx-auto mb-0 text-lg max-w-[320px] lg:max-w-[400px] lg:w-[400px]">
                 Transform React, Next.js app {""}
