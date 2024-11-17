@@ -8,6 +8,7 @@
     "target": "ESNext",
     "esModuleInterop": true
   },
-  "include": ["src/**/*", "bin/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src/**/*", "bin/**/*", "templates/**/*"],
+  "exclude": ["node_modules", "dist"],
+  "copy": [{ "from": "templates", "to": "dist/templates" }]
 }

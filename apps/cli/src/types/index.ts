@@ -1,5 +1,10 @@
 export interface CommandOptions {
   port?: number;
   host?: string;
-  // Add more options as needed
+}
+
+export interface R2AConfig {
+  name: string;
+  ios: boolean;
+  android: boolean;
 }
