@@ -1,81 +1,70 @@
-# Turborepo starter
+# React2App (beta)
 
-This is an official starter Turborepo.
+React2App lets you turn your React or Next.js web apps into iOS and Android mobile apps easily.
+No mobile development experience needed - just use your React skills and we'll handle the rest.
 
-## Using this example
+## 🚧 Warning
 
-Run the following command:
+The most of the features are under development, so let me know if you find any bugs!
 
-```sh
-npx create-turbo@latest
+## 📋 Prerequisites
+
+- Node.js 14.0 or higher
+- npm or yarn package manager
+- React or Next.js project
+- iOS App Store / Google Play Store developer accounts
+
+## 🏃‍♂️ Quick Start
+
+### 1. Start Development Server (beta)
+
+```bash
+npx react2app dev
 ```
 
-## What's inside?
+Preview your app instantly using 'Expo Go' (You can download on the App Store and Play Store).
 
-This Turborepo includes the following packages/apps:
+### 2. Build Your App (under development)
 
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
+```bash
+npx react2app build
 ```
 
-### Develop
+Creates production-ready builds for both iOS and Android platforms.
 
-To develop all apps and packages, run the following command:
+### 3. Deploy (under development)
 
-```
-cd my-turborepo
-pnpm dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
+```bash
+npx react2app deploy
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+Automates the app store submission process with guided form filling.
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+## ⚙️ Configuration (under development)
 
+Create `react2app.config.js` in your project root:
+
+```javascript
+module.exports = {
+  port: 3000,
+  output: "build",
+  publicPath: "/",
+  app: {
+    name: "My App",
+    version: "1.0.0",
+    identifier: "com.myapp.app",
+    icon: "./assets/icon.png",
+  },
+  // Additional configuration options
+};
 ```
-npx turbo link
-```
 
-## Useful Links
+## 📚 Documentation (under development)
 
-Learn more about the power of Turborepo:
+For detailed documentation, visit:
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+- [Docs](https://react2app.com/docs)
+
+## 🐛 Issue Reporting
+
+Found a bug? Please report it on our [GitHub Issues](https://github.com/donadojs/react2app/issues) page.
