@@ -185,15 +185,42 @@ export const runDevServer = async () => {
     const appServerUrl = `${devServerConfig.expo.HOST}:${devServerConfig.expo.PORT}`;
 
     printDevSeverInfo(webServerUrl, appServerUrl);
+
+    // Handle errors for both processes
     webServerProcess.on("error", (error) => {
       logger.error(`Web server failed: ${error.message}`);
     });
 
-    appServerProcess.on("SIGINT", () => {
+    appServerProcess.on("error", (error) => {
+      logger.error(`App server failed: ${error.message}`);
+    });
+
+    // Make sure child processes detach properly
+    const cleanup = () => {
+      // Send SIGINT to child processes
       webServerProcess?.kill();
       appServerProcess?.kill();
-      logger.info("All servers stopped");
-      process.exit();
+
+      // Force exit after a short delay if processes don't exit cleanly
+      setTimeout(() => {
+        logger.info("Force exiting...");
+        process.exit(0);
+      }, 1000);
+    };
+
+    // Handle Ctrl+C (SIGINT)
+    process.on("SIGINT", cleanup);
+    process.on("SIGTERM", cleanup);
+
+    // Also handle child process termination
+    webServerProcess.on("exit", () => {
+      appServerProcess?.kill();
+      process.exit(0);
+    });
+
+    appServerProcess.on("exit", () => {
+      webServerProcess?.kill();
+      process.exit(0);
     });
   } catch (error) {
     throw new DevServerError(
