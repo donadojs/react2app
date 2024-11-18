@@ -67,6 +67,7 @@ const devServerCommand: Record<
 };
 
 const runReactDevServer = async (): Promise<ChildProcess> => {
+  const READY_MESSAGE = "Ready";
   try {
     const rootDir = ensureReactProjectRootDir();
     const userFramework = determineReactFramework(rootDir);
@@ -83,9 +84,15 @@ const runReactDevServer = async (): Promise<ChildProcess> => {
         },
       });
       let isLogging = false;
+
+      // If the process READY_MESSAGE doesn't appear within 5 seconds, resolve it
+      setTimeout(() => {
+        resolve(reactDevServerProcess);
+      }, 5000);
+
       reactDevServerProcess.stdout?.on("data", (data) => {
         const message = data.toString();
-        if (message.includes("Ready")) {
+        if (message.includes(READY_MESSAGE)) {
           resolve(reactDevServerProcess);
           isLogging = true;
         }
@@ -109,7 +116,7 @@ const runReactDevServer = async (): Promise<ChildProcess> => {
 };
 
 const runExpoDevServer = async (): Promise<ChildProcess> => {
-  const INITIALIZE_COMPLETE_MESSAGE = "Logs for your project will appear below";
+  const READY_MESSAGE = "Logs for your project will appear below";
   try {
     const { expoRootDir } = getPaths();
 
@@ -128,7 +135,7 @@ const runExpoDevServer = async (): Promise<ChildProcess> => {
       expoDevServerProcess.stdout?.on("data", (data) => {
         const message = data.toString();
 
-        if (message.includes(INITIALIZE_COMPLETE_MESSAGE)) {
+        if (message.includes(READY_MESSAGE)) {
           resolve(expoDevServerProcess);
           isLogging = true;
           return;
