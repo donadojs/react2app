@@ -40,7 +40,7 @@ npx react2app deploy
 
 Automates the app store submission process with guided form filling.
 
-## ⚙️ Configuration (under development)
+## ⚙️ Configuration
 
 Create `react2app.config.js` in your project root:
 
@@ -59,7 +59,7 @@ module.exports = {
 };
 ```
 
-## 📚 Documentation (under development)
+## 📚 Documentation
 
 For detailed documentation, visit:
 

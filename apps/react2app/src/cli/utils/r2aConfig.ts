@@ -5,11 +5,16 @@ import { ConfigError } from "../errors/index.js";
 import { ERROR_MESSAGES } from "../errors/index.js";
 import { ERROR_CODE } from "../errors/index.js";
 
+export async function checkR2AConfigExist() {
+  const { R2AConfigPath } = getPaths();
+  return fs.existsSync(R2AConfigPath);
+}
+
 /**
  * Loads the React2App configuration from file
  * @returns {Promise<R2AConfig | null>} The loaded configuration or null if not found
  */
-async function loadR2AConfig(): Promise<R2AConfig | null> {
+export async function loadR2AConfig(): Promise<R2AConfig | null> {
   try {
     const { R2AConfigPath } = getPaths();
     if (!fs.existsSync(R2AConfigPath)) {
@@ -42,7 +47,7 @@ export const createR2AConfig = async (): Promise<R2AConfig> => {
  * @throws {Error} If config creation fails
  * @returns {Promise<R2AConfig>} The loaded or created configuration
  */
-async function initializeR2AConfig() {
+export async function initializeR2AConfig() {
   try {
     // Load existing config if exists
     const R2AConfig = await loadR2AConfig();
@@ -56,5 +61,3 @@ async function initializeR2AConfig() {
     throw error;
   }
 }
-
-export { initializeR2AConfig };

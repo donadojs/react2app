@@ -2,7 +2,7 @@ import { spawn } from "child_process";
 import { logger } from "./logger.js";
 import fs from "fs-extra";
 import path from "path";
-import type { R2AConfig } from "../types";
+import type { R2AConfig } from "../types/index.js";
 import { getPaths } from "./path.js";
 import { EXPO_DIR_NAME, EXPO_TEMPLATE_NAME } from "../constants/r2aConfig.js";
 import colors from "ansi-colors";
@@ -13,13 +13,15 @@ import { ERROR_CODE } from "../errors/index.js";
 import { ERROR_MESSAGES } from "../errors/index.js";
 import { ExpoError } from "../errors/index.js";
 
-function syncExpoProject(config: R2AConfig) {}
+export async function syncExpoProject(config: R2AConfig) {
+  console.log(config);
+}
 
 /**
  * Checks if an Expo project exists in the current directory
  * @returns {Promise<boolean>} Whether an Expo project exists
  */
-async function isExpoProjectExist(): Promise<boolean> {
+export async function checkExpoProjectExist(): Promise<boolean> {
   try {
     const { expoRootDir } = getPaths();
     const expoAppJsonPath = path.join(expoRootDir, "app.json");
@@ -30,6 +32,11 @@ async function isExpoProjectExist(): Promise<boolean> {
       ERROR_CODE.EXPO.PROJECT_NOT_FOUND
     );
   }
+}
+
+export async function checkExpoEnvFileExist(): Promise<boolean> {
+  const { expoEnvFilePath } = getPaths();
+  return fs.exists(expoEnvFilePath);
 }
 
 export async function createExpoProject(R2AConfig: R2AConfig) {
@@ -157,16 +164,20 @@ export async function createExpoProject(R2AConfig: R2AConfig) {
   }
 }
 
-const initializeEnvFile = async () => {
+export const createExpoEnvFile = async () => {
   const { expoEnvFilePath } = getPaths();
   await fs.ensureFileSync(expoEnvFilePath);
+};
 
-  const host = devServerConfig.react.HOST;
-  const port = devServerConfig.react.PORT;
-  const webViewUrl = `http://${host}:${port}`;
+export const updateExpoEnvFile = async (env: Record<string, string>) => {
+  const { expoEnvFilePath } = getPaths();
+  await updateEnvFile(expoEnvFilePath, env);
+};
 
-  await updateEnvFile(expoEnvFilePath, {
-    EXPO_PUBLIC_WEBVIEW_URL: webViewUrl,
+export const initializeExpoEnvFile = async () => {
+  await createExpoEnvFile();
+  await updateExpoEnvFile({
+    EXPO_PUBLIC_WEBVIEW_URL: `http://${devServerConfig.react.HOST}:${devServerConfig.react.PORT}`,
   });
 };
 
@@ -175,14 +186,14 @@ const initializeEnvFile = async () => {
  * @param config The React2App configuration
  * @throws {Error} If project initialization fails
  */
-async function initializeExpoProject(config: R2AConfig): Promise<void> {
+export async function initializeExpoProject(config: R2AConfig): Promise<void> {
   try {
-    const projectExists = await isExpoProjectExist();
+    const projectExists = await checkExpoProjectExist();
     if (projectExists) {
       await syncExpoProject(config);
     } else {
       await createExpoProject(config);
-      await initializeEnvFile();
+      await initializeExpoEnvFile();
     }
   } catch (error) {
     throw new ExpoError(
@@ -192,4 +203,22 @@ async function initializeExpoProject(config: R2AConfig): Promise<void> {
   }
 }
 
-export { initializeExpoProject };
+export async function validateExpoProject(config: R2AConfig) {
+  // Check if Expo project exists
+  const projectExists = await checkExpoProjectExist();
+  if (!projectExists) {
+    throw new ExpoError(
+      ERROR_MESSAGES.EXPO.PROJECT_NOT_FOUND,
+      ERROR_CODE.EXPO.PROJECT_NOT_FOUND
+    );
+  }
+
+  // Check if Expo env file exists
+  const envFileExists = await checkExpoEnvFileExist();
+  if (!envFileExists) {
+    throw new ExpoError(
+      ERROR_MESSAGES.EXPO.ENV_FILE_NOT_FOUND,
+      ERROR_CODE.EXPO.ENV_FILE_NOT_FOUND
+    );
+  }
+}

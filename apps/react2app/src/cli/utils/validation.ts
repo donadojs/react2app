@@ -1,3 +1,4 @@
+import { ConfigError, ERROR_CODE, ERROR_MESSAGES } from "../errors";
 import { R2AConfig } from "../types";
 
 /**
@@ -6,9 +7,12 @@ import { R2AConfig } from "../types";
  * @returns {boolean} Whether the configuration is valid
  */
 export function validateR2AConfig(config: unknown): config is R2AConfig {
-  if (!config || typeof config !== "object") return false;
-
-  if (!config || typeof config !== "object") return false;
+  if (!config || typeof config !== "object") {
+    throw new ConfigError(
+      ERROR_MESSAGES.CONFIG.PARSE_ERROR,
+      ERROR_CODE.CONFIG.PARSE_ERROR
+    );
+  }
 
   const typedConfig = config as Record<string, unknown>;
   return (
@@ -18,6 +22,4 @@ export function validateR2AConfig(config: unknown): config is R2AConfig {
     "android" in typedConfig &&
     (typeof typedConfig.output === "string" || typedConfig.output === undefined)
   );
-
-  return true;
 }

@@ -20,6 +20,7 @@ export const ERROR_MESSAGES = {
     DEPS_INSTALL_FAILED: "Expo dependencies installation failed",
     SERVER_FAILED: "Expo server failed to start",
     PROJECT_NOT_FOUND: "Expo project not found",
+    ENV_FILE_NOT_FOUND: "Expo env file not found",
   },
   WEB: {
     SERVER_FAILED: "Web server failed to start",
@@ -47,6 +48,7 @@ export const ERROR_CODE = {
     DEPS_INSTALL_FAILED: "EXPO_DEPS_INSTALL_FAILED",
     SERVER_FAILED: "EXPO_SERVER_FAILED",
     PROJECT_NOT_FOUND: "EXPO_PROJECT_NOT_FOUND",
+    ENV_FILE_NOT_FOUND: "EXPO_ENV_FILE_NOT_FOUND",
   },
   WEB: {
     SERVER_FAILED: "WEB_SERVER_FAILED",
