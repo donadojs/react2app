@@ -193,6 +193,9 @@ importers:
       lucide-react:
         specifier: ^0.456.0
         version: 0.456.0(react@18.2.0)
+      microsoft-clarity:
+        specifier: ^1.0.0
+        version: 1.0.0
       next:
         specifier: ^13.0.6
         version: 13.5.7(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -6850,6 +6853,9 @@ packages:
   micromatch@4.0.8:
     resolution: {integrity: sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA==}
     engines: {node: '>=8.6'}
+
+  microsoft-clarity@1.0.0:
+    resolution: {integrity: sha512-pKgILvxvFN9l/G0CMynPmejFQWm3eOgZriKHF4AZud5gYlxRh8HIjwHbGTJDMcAKK1d5DaaUti1XVRBYZJKfvw==}
 
   mime-db@1.52.0:
     resolution: {integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==}
@@ -18661,6 +18667,8 @@ snapshots:
     dependencies:
       braces: 3.0.3
       picomatch: 2.3.1
+
+  microsoft-clarity@1.0.0: {}
 
   mime-db@1.52.0: {}
 
