@@ -1,4 +1,4 @@
-# Auto Stack Navigation for Next.js (alpha)
+# Stack Navigation for Next.js (alpha)
 
 ## Why I Built This
 
@@ -14,7 +14,7 @@ So that's what I built. Literally just wrap your app with this:
 
 ```tsx
 // app/layout.tsx
-import { StackNavigation } from "@react2app/auto-stack-navigation";
+import { StackNavigation } from "@react2app/stack-navigation";
 
 export default function RootLayout({ children }) {
   return (
@@ -44,20 +44,20 @@ Install the package:
 
 ```bash
 # npm folks
-npm install @react2app/auto-stack-navigation
+npm install @react2app/stack-navigation
 
 # yarn if that's your thing
-yarn add @react2app/auto-stack-navigation
+yarn add @react2app/stack-navigation
 
 # pnpm gang
-pnpm add @react2app/auto-stack-navigation
+pnpm add @react2app/stack-navigation
 ```
 
 Add it in your layout:
 
 ```tsx
 // app/layout.tsx
-import { StackNavigation } from "@react2app/auto-stack-navigation";
+import { StackNavigation } from "@react2app/stack-navigation";
 
 export default function RootLayout({
   children,
@@ -116,7 +116,7 @@ Found a bug? Want to add something cool? PRs are welcome!
 
 ## More...
 
-Currently, this is a work in progress. I'm keep working on it to make it more robust and flexible. Want to know more about it? DM me on [Twitter](https://x.com/donadojs)
+Currently, this is a work in progress. I'm keep working on it to make it more robust and flexible. Want to know more about it? DM me on [Twitter](https://x.com/donadojsx)
 
 ## License
 

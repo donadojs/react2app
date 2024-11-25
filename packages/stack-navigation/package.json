@@ -1,12 +1,25 @@
 {
-  "name": "@react2app/auto-stack-navigation",
-  "description": "Smooth native-like page transitions for Next.js apps",
+  "name": "@react2app/stack-navigation",
+  "description": "Smooth native-like page transitions for Next.js",
   "version": "0.1.0",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/types/index.d.ts",
   "type": "module",
   "sideEffects": false,
+  "author": "donadojs",
+  "keywords": [
+    "stack navigation",
+    "stack navigator",
+    "stack",
+    "navigation",
+    "next",
+    "nextjs",
+    "react"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "dist"
   ],
