@@ -71,7 +71,7 @@ export const runSpawn = (
     }
 
     childProcess.on("error", (error) => {
-      if (error.code === "ENOENT") {
+      if ((error as NodeJS.ErrnoException).code === "ENOENT") {
         reject(new Error(`${command} is not installed`));
       } else {
         reject(error);
