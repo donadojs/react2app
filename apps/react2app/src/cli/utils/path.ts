@@ -54,7 +54,7 @@ export const getPaths = () => {
   const rootDir = ensureReactProjectRootDir();
   const R2ACLIRootDir = path.resolve(
     path.dirname(fileURLToPath(import.meta.url)),
-    "../.."
+    "../../.."
   );
 
   return {

@@ -61,3 +61,8 @@ export async function initializeR2AConfig() {
     throw error;
   }
 }
+
+export function removeR2AConfig() {
+  const { R2AConfigPath } = getPaths();
+  fs.unlinkSync(R2AConfigPath);
+}
