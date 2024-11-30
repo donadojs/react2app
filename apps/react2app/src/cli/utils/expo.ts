@@ -1,20 +1,22 @@
 import { spawn } from "child_process";
-import { logger } from "./logger.js";
 import fs from "fs-extra";
 import path from "path";
+import colors from "ansi-colors";
+import cliProgress from "cli-progress";
 import type { R2AConfig } from "../types/index.js";
 import { getPaths } from "./path.js";
 import { EXPO_DIR_NAME, EXPO_TEMPLATE_NAME } from "../constants/r2aConfig.js";
-import colors from "ansi-colors";
-import cliProgress from "cli-progress";
 import { updateEnvFile } from "./env.js";
-import { devServerConfig } from "./devServer.js";
+import { devServerConfig, getLocalIPAddress } from "./devServer.js";
 import { ERROR_CODE } from "../errors/index.js";
 import { ERROR_MESSAGES } from "../errors/index.js";
 import { ExpoError } from "../errors/index.js";
 
 export async function syncExpoProject(config: R2AConfig) {
-  console.log(config);
+  // console.log(config);
+  updateEnvFile(path.join(getPaths().expoRootDir, ".env"), {
+    EXPO_PUBLIC_WEBVIEW_URL: `http://${getLocalIPAddress()}:${devServerConfig.react.PORT}`,
+  });
 }
 
 /**
@@ -44,7 +46,6 @@ export async function createExpoProject(R2AConfig: R2AConfig) {
     const { R2ARootDir, reactProjectRootDir } = getPaths();
     fs.ensureDirSync(R2ARootDir);
 
-    console.log();
     const progressBarPhases = [
       {
         range: [0, 10],

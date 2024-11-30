@@ -1,10 +1,10 @@
 import path from "path";
-import { logger } from "../utils/logger.js";
-import { getPaths } from "../utils/path.js";
 import inquirer from "inquirer";
 import inquirerAutocomplete from "inquirer-autocomplete-prompt";
-import { PLATFORM, Platform } from "../constants/index.js";
 import fs from "fs-extra";
+import { logger } from "../utils/logger.js";
+import { getPaths } from "../utils/path.js";
+import { PLATFORM, Platform } from "../constants/index.js";
 import {
   getNotInstalledPrograms,
   handleNotInstalledPrograms,

@@ -1,10 +1,10 @@
-import { devServerConfig } from "../utils/devServer";
+import { devServerConfig } from "../utils/devServer.js";
 import {
   createExpoEnvFile,
   createExpoProject,
   updateExpoEnvFile,
-} from "../utils/expo";
-import { createR2AConfig } from "../utils/r2aConfig";
+} from "../utils/expo.js";
+import { createR2AConfig } from "../utils/r2aConfig.js";
 
 export const init = async () => {
   try {

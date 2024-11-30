@@ -1,5 +1,5 @@
-import { ConfigError, ERROR_CODE, ERROR_MESSAGES } from "../errors";
-import { R2AConfig } from "../types";
+import { ConfigError, ERROR_CODE, ERROR_MESSAGES } from "../errors/index.js";
+import type { R2AConfig } from "../types/index.js";
 
 /**
  * Validates the configuration structure

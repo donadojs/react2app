@@ -1,9 +1,7 @@
-import { loadR2AConfig } from "../utils/r2aConfig";
-import { validateExpoProject } from "../utils/expo";
-import { validateR2AConfig } from "../utils/validation";
-import { ERROR_CODE } from "../errors";
-import { ERROR_MESSAGES } from "../errors";
-import { ConfigError } from "../errors";
+import { loadR2AConfig } from "../utils/r2aConfig.js";
+import { validateExpoProject } from "../utils/expo.js";
+import { validateR2AConfig } from "../utils/validation.js";
+import { ConfigError, ERROR_CODE, ERROR_MESSAGES } from "../errors/index.js";
 
 export const doctor = async () => {
   try {

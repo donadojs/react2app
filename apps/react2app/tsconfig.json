@@ -2,14 +2,16 @@
   "extends": "@react2app/typescript-config/cli.json",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "outDir": "./dist",
     "rootDir": ".",
+    "outDir": "./dist",
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "node",
     "target": "ESNext",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "declaration": true,
+    "declarationDir": "./dist"
   },
-  "include": ["src/**/*", "bin/**/*", "src/cli/templates/**/*"],
+  "include": ["src/**/*", "bin/**/*"],
   "exclude": ["node_modules", "dist"],
   "copy": [
     { "from": "src/cli/templates", "to": "dist/templates" },

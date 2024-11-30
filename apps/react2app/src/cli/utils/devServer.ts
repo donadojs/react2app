@@ -1,5 +1,4 @@
 import chalk from "chalk";
-import fs from "fs-extra";
 import qrcode from "qrcode-terminal";
 import { ChildProcess, spawn } from "child_process";
 import { networkInterfaces } from "os";
@@ -15,7 +14,7 @@ import {
   DevServerError,
 } from "../errors/index.js";
 
-const getLocalIPAddress = (): string => {
+export const getLocalIPAddress = (): string => {
   const nets = networkInterfaces();
   let localIP = "127.0.0.1"; // default to localhost
 
