@@ -1,237 +1,208 @@
+import { spawn, type ChildProcess } from "child_process";
 import chalk from "chalk";
-import qrcode from "qrcode-terminal";
-import { ChildProcess, spawn } from "child_process";
-import { networkInterfaces } from "os";
+import { BaseError } from "../errors/index.js";
+import type {
+  FrameworkConfig,
+  DevServerOptions,
+  R2ADevServerOptions,
+} from "../types/framework.js";
 import { logger } from "./logger.js";
-import { ensureReactProjectRootDir, getPaths } from "./path.js";
-import { REACT_FRAMEWORK, ReactFramework } from "../constants/index.js";
-import { determineReactFramework } from "./project.js";
-import {
-  ERROR_CODE,
-  ERROR_MESSAGES,
-  ExpoError,
-  WebError,
-  DevServerError,
-} from "../errors/index.js";
+import qrcode from "qrcode-terminal";
 
-export const getLocalIPAddress = (): string => {
-  const nets = networkInterfaces();
-  let localIP = "127.0.0.1"; // default to localhost
+interface ServerInfo {
+  host: string;
+  port: number;
+  scheme?: string;
+}
 
-  for (const name of Object.keys(nets)) {
-    const interfaces = nets[name];
-    if (!interfaces) continue;
+const printDevServerInfo = (webServer: ServerInfo, appServer: ServerInfo) => {
+  const formatUrl = (server: ServerInfo) =>
+    server.scheme
+      ? `${server.scheme}://${server.host}:${server.port}`
+      : `${server.host}:${server.port}`;
 
-    for (const net of interfaces) {
-      // Skip internal and non-IPv4 addresses
-      if (!net.internal && net.family === "IPv4") {
-        localIP = net.address;
-        return localIP;
-      }
-    }
-  }
-  return localIP;
-};
+  const messages = [
+    "",
+    chalk.green("🚀 Server is running at:\n"),
+    chalk.blue(`  Web: ${formatUrl(webServer)}`),
+    chalk.blue(`  App: ${formatUrl(appServer)}`),
+    "",
+  ];
+  messages.forEach((msg) => console.log(msg));
 
-export const devServerConfig = {
-  react: {
-    HOST: getLocalIPAddress(),
-    PORT: "3000",
-  },
-  expo: {
-    HOST: getLocalIPAddress(),
-    PORT: "8081",
-  },
-};
+  // For Expo QR code, we specifically need the exp:// scheme
+  qrcode.generate(`exp://${appServer.host}:${appServer.port}`, { small: true });
 
-const devServerCommand: Record<
-  ReactFramework,
-  { command: string; args: string[] }
-> = {
-  [REACT_FRAMEWORK.NEXTJS]: {
-    command: "npx",
-    args: [
-      "next",
-      "dev",
-      "-H",
-      devServerConfig.react.HOST,
-      "-p",
-      devServerConfig.react.PORT,
-    ],
-  },
-  [REACT_FRAMEWORK.REACT]: {
-    command: "npm",
-    args: ["run", "start"],
-  },
-};
-
-const runReactDevServer = async (): Promise<ChildProcess> => {
-  const READY_MESSAGE = "Ready";
-  try {
-    const rootDir = ensureReactProjectRootDir();
-    const userFramework = determineReactFramework(rootDir);
-    const { command, args } = devServerCommand[userFramework];
-    const promise = new Promise<ChildProcess>((resolve, reject) => {
-      const reactDevServerProcess = spawn(command, args, {
-        cwd: rootDir,
-        stdio: "pipe",
-        shell: process.platform === "win32",
-        env: {
-          ...process.env,
-          HOST: devServerConfig.react.HOST,
-          PORT: devServerConfig.react.PORT,
-        },
-      });
-      let isLogging = false;
-
-      // If the process READY_MESSAGE doesn't appear within 5 seconds, resolve it
-      setTimeout(() => {
-        resolve(reactDevServerProcess);
-      }, 5000);
-
-      reactDevServerProcess.stdout?.on("data", (data) => {
-        const message = data.toString();
-        if (message.includes(READY_MESSAGE)) {
-          resolve(reactDevServerProcess);
-          isLogging = true;
-        }
-        if (isLogging && !message.includes("Ready")) {
-          const prefixedMessage = message
-            .split("\n")
-            .map((line: string) => (line.trim() ? `[Web] ${line}` : line))
-            .join("\n");
-          process.stdout.write(prefixedMessage);
-        }
-      });
-      reactDevServerProcess.stderr?.on("data", (data) => {});
-    });
-    return promise;
-  } catch (error) {
-    throw new WebError(
-      ERROR_MESSAGES.WEB.SERVER_FAILED,
-      ERROR_CODE.WEB.SERVER_FAILED
-    );
-  }
-};
-
-const runExpoDevServer = async (): Promise<ChildProcess> => {
-  const READY_MESSAGE = "Logs for your project will appear below";
-  try {
-    const { expoRootDir } = getPaths();
-
-    const promise = new Promise<ChildProcess>((resolve, reject) => {
-      const expoDevServerProcess = spawn("npx", ["expo", "start"], {
-        cwd: expoRootDir,
-        stdio: "pipe",
-        shell: true,
-        env: {
-          ...process.env,
-          HOST: devServerConfig.expo.HOST,
-          PORT: devServerConfig.expo.PORT,
-        },
-      });
-      let isLogging = false;
-      expoDevServerProcess.stdout?.on("data", (data) => {
-        const message = data.toString();
-
-        if (message.includes(READY_MESSAGE)) {
-          resolve(expoDevServerProcess);
-          isLogging = true;
-          return;
-        }
-        if (isLogging) {
-          const prefixedMessage = message
-            .split("\n")
-            .map((line: string) =>
-              line.trim() ? chalk.blue(`[App]`) + line : line
-            )
-            .join("\n");
-
-          process.stdout.write(prefixedMessage);
-        }
-      });
-      expoDevServerProcess.stderr?.on("data", (data) => {});
-    });
-    return promise;
-  } catch (error) {
-    throw new ExpoError(
-      ERROR_MESSAGES.EXPO.SERVER_FAILED,
-      ERROR_CODE.EXPO.SERVER_FAILED
-    );
-  }
-};
-
-const printDevSeverInfo = (webServerUrl: string, appServerUrl: string) => {
-  console.log();
-  console.log(chalk.green("🚀 Server is running at:\n"));
-  console.log(chalk.blue(`  Web: http://${webServerUrl}`));
-  console.log(chalk.blue(`  App: http://${appServerUrl}`));
-  console.log();
-
-  qrcode.generate(`exp://${appServerUrl}`, { small: true });
-
-  console.log();
-  console.log(
+  const instructions = [
+    "",
     chalk.yellow(
       "📱 Download 'Expo Go' app from App Store/Play Store and scan the QR code with phone camera\n"
-    )
-  );
+    ),
+    chalk.gray("💡 App not installed? Get it at https://expo.dev/expo-go"),
+  ];
 
-  console.log(
-    chalk.gray("💡 App not installed? Get it at https://expo.dev/expo-go")
-  );
+  instructions.forEach((msg) => console.log(msg));
 };
 
-export const runDevServer = async () => {
-  try {
-    const webServerProcess = await runReactDevServer();
-    const appServerProcess = await runExpoDevServer();
+export class DevServer {
+  private process?: ChildProcess;
+  private isReady = false;
+  private scheme = "http";
+  private host?: string;
+  private port?: number;
+  private framework: FrameworkConfig;
+  private options: DevServerOptions;
+  private logColor: typeof chalk;
+  private cwd?: string;
 
-    const webServerUrl = `${devServerConfig.react.HOST}:${devServerConfig.react.PORT}`;
-    const appServerUrl = `${devServerConfig.expo.HOST}:${devServerConfig.expo.PORT}`;
-
-    printDevSeverInfo(webServerUrl, appServerUrl);
-
-    // Handle errors for both processes
-    webServerProcess.on("error", (error) => {
-      logger.error(`Web server failed: ${error.message}`);
-    });
-
-    appServerProcess.on("error", (error) => {
-      logger.error(`App server failed: ${error.message}`);
-    });
-
-    // Make sure child processes detach properly
-    const cleanup = () => {
-      // Send SIGINT to child processes
-      webServerProcess?.kill();
-      appServerProcess?.kill();
-
-      // Force exit after a short delay if processes don't exit cleanly
-      setTimeout(() => {
-        logger.info("Force exiting...");
-        process.exit(0);
-      }, 1000);
-    };
-
-    // Handle Ctrl+C (SIGINT)
-    process.on("SIGINT", cleanup);
-    process.on("SIGTERM", cleanup);
-
-    // Also handle child process termination
-    webServerProcess.on("exit", () => {
-      appServerProcess?.kill();
-      process.exit(0);
-    });
-
-    appServerProcess.on("exit", () => {
-      webServerProcess?.kill();
-      process.exit(0);
-    });
-  } catch (error) {
-    throw new DevServerError(
-      ERROR_MESSAGES.DEV_SERVER.SERVER_FAILED,
-      ERROR_CODE.DEV_SERVER.SERVER_FAILED
-    );
+  constructor(options: DevServerOptions) {
+    this.framework = options.framework;
+    this.options = options;
+    this.logColor = options.logColor || chalk.blue;
+    this.host = options.host;
+    this.port = options.port;
+    this.cwd = options.cwd;
   }
-};
+
+  getServerInfo(): ServerInfo {
+    if (!this.host || !this.port) {
+      throw new Error("Error while getting server info: Server not started");
+    }
+    return {
+      host: this.host,
+      port: this.port,
+      scheme: this.scheme,
+    };
+  }
+
+  async start(): Promise<void> {
+    try {
+      const devCommand = await this.framework.getDevCommand({
+        host: this.host,
+        port: this.port,
+      });
+
+      await new Promise<void>((resolve, reject) => {
+        this.process = spawn(devCommand.command, devCommand.args, {
+          stdio: "pipe",
+          shell: false,
+          env: {
+            ...process.env,
+            ...devCommand.env,
+          },
+          cwd: this.cwd,
+        });
+        this.setupLogging();
+        this.setupErrorHandling(reject);
+        this.waitForReady(resolve);
+      });
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      const isPermissionError = errorMessage.includes("EACCES");
+
+      throw new BaseError(
+        `Failed to start ${this.framework.name} server`,
+        "SERVER_START_FAILED",
+        isPermissionError
+          ? `Permission denied for port ${this.port}. Please use a port number above 1024.`
+          : errorMessage
+      );
+    }
+  }
+
+  private setupLogging(): void {
+    this.process?.stdout?.on("data", (data) => {
+      const message = data.toString();
+      if (this.isReady || this.options.debug) {
+        const lines = message
+          .split("\n")
+          .map((line: string) =>
+            line.trim()
+              ? `${this.logColor(this.framework.logPrefix)} ${line}`
+              : line
+          )
+          .join("\n");
+        process.stdout.write(lines);
+      }
+    });
+
+    this.process?.stderr?.on("data", (data) => {
+      if (this.options.debug) {
+        const message = data.toString();
+        process.stderr.write(
+          chalk.red(`${this.framework.logPrefix} ${message}`)
+        );
+      }
+    });
+  }
+
+  private setupErrorHandling(reject: (reason?: any) => void): void {
+    this.process?.on("error", (error) => {
+      logger.error(`${this.framework.name} server failed: ${error.message}`);
+      reject(error);
+    });
+  }
+
+  private waitForReady(resolve: () => void): void {
+    if (this.options.debug) {
+      logger.info(
+        `${this.framework.logPrefix} Waiting for ready message: "${this.framework.readyMessage}"`,
+        this.logColor
+      );
+    }
+
+    this.process?.stdout?.on("data", (data) => {
+      const message = data.toString();
+      if (message.includes(this.framework.readyMessage)) {
+        this.isReady = true;
+        if (this.options.debug) {
+          logger.info(
+            `${this.framework.logPrefix} Server is ready!`,
+            this.logColor
+          );
+        }
+        resolve();
+      }
+    });
+  }
+
+  kill(): void {
+    this.process?.kill();
+  }
+
+  getEnv() {
+    return {
+      PORT: (this.port ?? 3000).toString(),
+      ...process.env,
+      ...this.framework.env,
+    };
+  }
+}
+
+export async function runDevServer(options: R2ADevServerOptions) {
+  try {
+    const webServer = new DevServer(options.webServer);
+    const appServer = new DevServer(options.appServer);
+    await Promise.all([webServer.start(), appServer.start()]);
+    printDevServerInfo(webServer.getServerInfo(), appServer.getServerInfo());
+    setupServerKill(webServer, appServer);
+  } catch (error) {
+    logger.error("Failed to start development servers");
+    if (error instanceof Error) {
+      logger.error(error.message);
+    }
+    throw error;
+  }
+}
+
+function setupServerKill(webServer: DevServer, appServer: DevServer): void {
+  const cleanup = () => {
+    webServer.kill();
+    appServer.kill();
+    process.exit(0);
+  };
+
+  process.on("SIGINT", cleanup);
+  process.on("SIGTERM", cleanup);
+}

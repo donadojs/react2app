@@ -1,9 +1,11 @@
-import { devServerConfig } from "../utils/devServer.js";
+import { DEFAULT_DEV_SERVER_PORT } from "../constants/index.js";
+import { FRAMEWORK } from "../constants/index.js";
 import {
   createExpoEnvFile,
   createExpoProject,
   updateExpoEnvFile,
 } from "../utils/expo.js";
+import { getLocalIPAddress } from "../utils/network.js";
 import { createR2AConfig } from "../utils/r2aConfig.js";
 
 export const init = async () => {
@@ -16,9 +18,6 @@ export const init = async () => {
 
     // Setup Expo env file
     await createExpoEnvFile();
-    await updateExpoEnvFile({
-      EXPO_PUBLIC_WEBVIEW_URL: `http://${devServerConfig.react.HOST}:${devServerConfig.react.PORT}`,
-    });
   } catch (error) {
     throw error;
   }

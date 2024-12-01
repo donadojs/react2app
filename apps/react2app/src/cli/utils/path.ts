@@ -70,7 +70,7 @@ export const getPaths = () => {
     ),
     expoEnvFilePath: path.resolve(rootDir, R2A_DIR_NAME, EXPO_DIR_NAME, ".env"),
     R2AConfigPath: path.resolve(rootDir, R2A_CONFIG_FILENAME),
-    R2ACLIRootDir,
+    R2ACLIRootDir: path.resolve(R2ACLIRootDir),
     R2AConfigTemplatePath: path.resolve(
       R2ACLIRootDir,
       TEMPLATE_DIR_NAME,

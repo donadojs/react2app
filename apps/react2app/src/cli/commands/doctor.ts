@@ -36,7 +36,7 @@ export const doctor = async () => {
     const spinner = ora(check.name).start();
     try {
       lastConfig = await check.task(lastConfig);
-      spinner.succeed(chalk.green(check.name));
+      spinner.succeed(chalk.white(check.name));
     } catch (error) {
       spinner.fail(chalk.red(check.name));
 

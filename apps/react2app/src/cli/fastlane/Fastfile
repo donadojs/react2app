@@ -28,7 +28,7 @@ platform :ios do
   lane :build do    
     update_project_team(
       path: "#{ENV['APP_NAME']}.xcodeproj",
-      teamid: "YOUR_TEAM_ID"  # 여기에 팀 ID 입력
+      teamid: "YOUR_TEAM_ID"  # Enter your team ID here
     )
     
     gym(

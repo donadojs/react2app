@@ -9,7 +9,13 @@ export const PROGRAM = {
 
 export type Program = (typeof PROGRAM)[keyof typeof PROGRAM];
 
-const programCommands = {
+const programCommands: Record<
+  Program,
+  {
+    version: { command: string; args: string[] };
+    install: { command: string; args: string[] };
+  }
+> = {
   [PROGRAM.XCODE]: {
     version: {
       command: "xcode-select",

@@ -1,6 +1,16 @@
-export interface CommandOptions {
-  port?: number;
-  host?: string;
+import type {
+  PackageManager,
+  CommandConfig,
+  DevServerOptions,
+} from "./framework.js";
+
+export interface CommandOptions {}
+
+export interface DevCommandOptions {
+  debug?: boolean;
+  packageManager?: PackageManager;
+  port?: number; // web server port
+  host?: string; // web server host
 }
 
 export interface R2AConfig {
@@ -8,3 +18,5 @@ export interface R2AConfig {
   ios: boolean;
   android: boolean;
 }
+
+export type { PackageManager, CommandConfig, DevServerOptions };
