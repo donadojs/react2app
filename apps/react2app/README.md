@@ -24,13 +24,16 @@ npx react2app dev
 
 Preview your app instantly using 'Expo Go' (You can download on the App Store and Play Store).
 
-### 2. Build Your App (under development)
+### 2. Build Your App
 
 ```bash
 npx react2app build
 ```
 
 Creates production-ready builds for both iOS and Android platforms.
+
+** Currently only iOS is supported **
+Before run build, you need to create Apple Developer account and setup [Apple Developer Program](https://developer.apple.com/programs/). Also, you need to login to Xcode if you haven't done that yet.
 
 ### 3. Deploy (under development)
 
