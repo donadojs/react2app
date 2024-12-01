@@ -6,6 +6,7 @@ import { deploy } from "../src/cli/commands/deploy.js";
 import { clean } from "../src/cli/commands/clean.js";
 import { doctor } from "../src/cli/commands/doctor.js";
 import { DevCommandOptions } from "../src/cli/types/index.js";
+import { init } from "../src/cli/commands/init.js";
 
 const program = new Command();
 
@@ -28,5 +29,6 @@ program.command("build").description("Build for production").action(build);
 program.command("deploy").description("Deploy application").action(deploy);
 program.command("doctor").description("Check for issues").action(doctor);
 program.command("clean").description("Clean up").action(clean);
+program.command("init").description("Initialize project").action(init);
 
 program.parse();

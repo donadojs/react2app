@@ -1,4 +1,4 @@
-import { loadR2AConfig } from "../utils/r2aConfig.js";
+import { loadR2AConfig } from "../utils/config.js";
 import { validateExpoProject } from "../utils/expo.js";
 import { validateR2AConfig } from "../utils/validation.js";
 import { ConfigError, ERROR_CODE, ERROR_MESSAGES } from "../errors/index.js";

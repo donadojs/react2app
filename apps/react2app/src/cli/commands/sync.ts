@@ -1,6 +1,6 @@
 import { ConfigError, ERROR_CODE, ERROR_MESSAGES } from "../errors/index.js";
-import { syncExpoProject } from "../utils/expo.js";
-import { loadR2AConfig } from "../utils/r2aConfig.js";
+import { syncR2AConfigWithExpo } from "../utils/sync.js";
+import { loadR2AConfig } from "../utils/config.js";
 
 export const sync = async () => {
   try {
@@ -11,7 +11,7 @@ export const sync = async () => {
         ERROR_CODE.CONFIG.NOT_FOUND
       );
     }
-    syncExpoProject(R2AConfig);
+    await syncR2AConfigWithExpo();
   } catch (error) {
     console.error(error);
   }

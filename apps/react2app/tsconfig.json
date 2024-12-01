@@ -1,20 +1,15 @@
 {
-  "extends": "@react2app/typescript-config/cli.json",
+  "extends": "@react2app/typescript-config/base.json",
   "compilerOptions": {
     "jsx": "react-jsx",
     "rootDir": ".",
     "outDir": "./dist",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "target": "ESNext",
-    "esModuleInterop": true,
     "declaration": true,
     "declarationDir": "./dist"
   },
-  "include": ["src/**/*", "bin/**/*"],
-  "exclude": ["node_modules", "dist"],
-  "copy": [
-    { "from": "src/cli/templates", "to": "dist/templates" },
-    { "from": "src/cli/fastlane", "to": "dist/fastlane" }
-  ]
+  "include": ["src/components/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

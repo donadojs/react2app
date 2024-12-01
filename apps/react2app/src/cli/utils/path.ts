@@ -1,80 +1,113 @@
-import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
-import {
-  EXPO_DIR_NAME,
-  R2A_CONFIG_FILENAME,
-  R2A_DIR_NAME,
-  R2A_CONFIG_TEMPLATE_FILENAME,
-  TEMPLATE_DIR_NAME,
-} from "../constants/r2aConfig.js";
-import { ERROR_CODE, ERROR_MESSAGES, ProjectError } from "../errors/index.js";
+import { fileURLToPath } from "url";
+import { DIRECTORY_NAMES, FILE_NAMES } from "../config/constants.js";
 
-export function ensurePackageJsonExist(dir: string) {
-  const packageJsonPath = path.join(dir, "package.json");
+const CLI_ROOT = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "../../.."
+);
+
+export const getExpoAppNameFromDirectory = async (): Promise<string | null> => {
+  // Get expo app names based on the directories in react2app
+  const r2aDir = path.join(process.cwd(), DIRECTORY_NAMES.R2A);
+  if (!fs.existsSync(r2aDir)) {
+    // throw new Error("react2app directory not found");
+    return null;
+  }
+  const dirs = fs.readdirSync(r2aDir);
+  const expoDirs = dirs.filter((dir) => {
+    const dirPath = path.join(r2aDir, dir);
+    return (
+      fs.statSync(dirPath).isDirectory() &&
+      fs.existsSync(path.join(dirPath, "app.json"))
+    ); // Check for expo project marker
+  });
+  if (expoDirs.length === 0) {
+    // throw new Error("No expo project found");
+    return null;
+  }
+  // Return the first expo directory
+  return expoDirs[0];
+};
+
+export const getExpoAppNameFromConfig = async (): Promise<string> => {
+  const R2AConfigPath = path.join(PATHS.R2A.CONFIG_FILE);
+  if (!fs.existsSync(R2AConfigPath)) {
+    throw new Error("react2app.config.js not found in project root");
+  }
+  const { default: config } = await import(R2AConfigPath);
+  if (!config.projectName) {
+    throw new Error("Project name not set in react2app.config.js");
+  }
+  return config.projectName;
+};
+
+export const PATHS = {
+  CLI: {
+    ROOT: CLI_ROOT,
+    TEMPLATES: path.join(CLI_ROOT, DIRECTORY_NAMES.TEMPLATES),
+    CONFIG_TEMPLATE: path.join(
+      CLI_ROOT,
+      DIRECTORY_NAMES.TEMPLATES,
+      FILE_NAMES.R2A.CONFIG_TEMPLATE
+    ),
+  },
+  PROJECT_ROOT: process.cwd(),
+  R2A: {
+    ROOT: path.join(process.cwd(), DIRECTORY_NAMES.R2A),
+    CONFIG_FILE: path.join(process.cwd(), FILE_NAMES.R2A.CONFIG),
+  },
+  REACT: {
+    ROOT: process.cwd(),
+    SRC: path.join(process.cwd(), "src"),
+    ENV_FILE: path.join(process.cwd(), FILE_NAMES.REACT.ENV),
+    CONFIG_FILE: path.join(process.cwd(), FILE_NAMES.REACT.CONFIG),
+  },
+  getExpoPaths: async () => {
+    const expoAppName = await getExpoAppNameFromConfig();
+    return {
+      ROOT: path.join(process.cwd(), DIRECTORY_NAMES.R2A, expoAppName),
+      SRC: path.join(process.cwd(), DIRECTORY_NAMES.R2A, expoAppName, "src"),
+      ENV_FILE: path.join(
+        process.cwd(),
+        DIRECTORY_NAMES.R2A,
+        expoAppName,
+        FILE_NAMES.EXPO.ENV
+      ),
+      APP_CONFIG: path.join(
+        process.cwd(),
+        DIRECTORY_NAMES.R2A,
+        expoAppName,
+        FILE_NAMES.EXPO.APP_CONFIG
+      ),
+      CONFIG_FILE: path.join(
+        process.cwd(),
+        DIRECTORY_NAMES.R2A,
+        expoAppName,
+        FILE_NAMES.EXPO.CONFIG
+      ),
+    };
+  },
+} as const;
+
+export const ensureDirectoryExists = (dirPath: string): string => {
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath, { recursive: true });
+  }
+  return dirPath;
+};
+
+export const resolveProjectPath = (...paths: string[]): string => {
+  validateProjectRoot();
+  return path.join(PATHS.PROJECT_ROOT, ...paths);
+};
+
+export const validateProjectRoot = (): void => {
+  const packageJsonPath = path.join(PATHS.PROJECT_ROOT, "package.json");
   if (!fs.existsSync(packageJsonPath)) {
-    throw new ProjectError(
-      ERROR_MESSAGES.PROJECT.NO_PACKAGE_JSON,
-      ERROR_CODE.PROJECT.NO_PACKAGE_JSON,
-      dir
+    throw new Error(
+      "This command must be run in the root directory of your project (where package.json is located)"
     );
   }
-  return dir;
-}
-
-export function ensureReactProjectRootDir() {
-  const currentDir = process.cwd();
-  ensurePackageJsonExist(currentDir);
-  const packageJsonPath = path.join(currentDir, "package.json");
-
-  try {
-    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
-    const hasReact = !!(
-      packageJson.dependencies?.react || packageJson.devDependencies?.react
-    );
-
-    if (!hasReact) {
-      throw new ProjectError(
-        ERROR_MESSAGES.PROJECT.NO_REACT_PROJECT,
-        ERROR_CODE.PROJECT.NO_REACT_PROJECT,
-        currentDir
-      );
-    }
-    return currentDir;
-  } catch (error) {
-    throw new ProjectError(
-      ERROR_MESSAGES.PROJECT.NO_REACT_PROJECT,
-      ERROR_CODE.PROJECT.NO_REACT_PROJECT,
-      currentDir
-    );
-  }
-}
-
-export const getPaths = () => {
-  const rootDir = ensureReactProjectRootDir();
-  const R2ACLIRootDir = path.resolve(
-    path.dirname(fileURLToPath(import.meta.url)),
-    "../../.."
-  );
-
-  return {
-    reactProjectRootDir: path.resolve(rootDir),
-    R2ARootDir: path.resolve(rootDir, R2A_DIR_NAME),
-    expoRootDir: path.resolve(rootDir, R2A_DIR_NAME, EXPO_DIR_NAME),
-    iosRootDir: path.resolve(rootDir, R2A_DIR_NAME, EXPO_DIR_NAME, "ios"),
-    androidRootDir: path.resolve(
-      rootDir,
-      R2A_DIR_NAME,
-      EXPO_DIR_NAME,
-      "android"
-    ),
-    expoEnvFilePath: path.resolve(rootDir, R2A_DIR_NAME, EXPO_DIR_NAME, ".env"),
-    R2AConfigPath: path.resolve(rootDir, R2A_CONFIG_FILENAME),
-    R2ACLIRootDir: path.resolve(R2ACLIRootDir),
-    R2AConfigTemplatePath: path.resolve(
-      R2ACLIRootDir,
-      TEMPLATE_DIR_NAME,
-      R2A_CONFIG_TEMPLATE_FILENAME
-    ),
-  };
 };

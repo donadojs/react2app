@@ -1,18 +1,14 @@
 const config = {
-  name: "my-app",
-  ios: {
-    bundleId: "com.example.app",
-    name: "MyApp",
-    displayName: "My App",
-    version: "1.0.0",
-    buildNumber: "1",
+  projectName: null,
+  displayName: null,
+  appId: null,
+  version: "1.0.0",
+  design: {
+    icon: "./assets/images/icon.png",
+    splash: "./assets/images/splash.png",
   },
-  android: {
-    packageName: "com.example.app",
-    name: "MyApp",
-    displayName: "My App",
-    version: "1.0.0",
-    versionCode: 1,
+  ios: {
+    teamId: process.env.R2A_IOS_TEAM_ID,
   },
 };
 

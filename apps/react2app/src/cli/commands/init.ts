@@ -1,17 +1,11 @@
-import { createExpoEnvFile, createExpoProject } from "../utils/expo.js";
-import { createR2AConfig } from "../utils/r2aConfig.js";
+import { cleanupR2A } from "../utils/cleanup.js";
+import { initR2AProject } from "../utils/init.js";
 
 export const init = async () => {
   try {
-    // Setup R2A config
-    const newR2AConfig = await createR2AConfig();
-
-    // Setup Expo project
-    await createExpoProject(newR2AConfig);
-
-    // Setup Expo env file
-    await createExpoEnvFile();
+    await initR2AProject();
   } catch (error) {
+    cleanupR2A();
     throw error;
   }
 };

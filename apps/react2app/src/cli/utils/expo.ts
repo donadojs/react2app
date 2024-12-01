@@ -1,19 +1,15 @@
 import { spawn } from "child_process";
 import fs from "fs-extra";
-import path from "path";
 import colors from "ansi-colors";
 import cliProgress from "cli-progress";
 import type { R2AConfig } from "../types/index.js";
-import { getPaths } from "./path.js";
-import { EXPO_DIR_NAME, EXPO_TEMPLATE_NAME } from "../constants/r2aConfig.js";
+import { PATHS } from "./path.js";
 import { updateEnvFile } from "./env.js";
 import { ERROR_CODE } from "../errors/index.js";
 import { ERROR_MESSAGES } from "../errors/index.js";
 import { ExpoError } from "../errors/index.js";
-
-export async function syncExpoProject(config: R2AConfig) {
-  // console.log(config);
-}
+import { FILE_NAMES, DIRECTORY_NAMES } from "../config/constants.js";
+import path from "path";
 
 /**
  * Checks if an Expo project exists in the current directory
@@ -21,25 +17,21 @@ export async function syncExpoProject(config: R2AConfig) {
  */
 export async function checkExpoProjectExist(): Promise<boolean> {
   try {
-    const { expoRootDir } = getPaths();
-    const expoAppJsonPath = path.join(expoRootDir, "app.json");
-    return fs.exists(expoAppJsonPath);
+    const { CONFIG_FILE } = await PATHS.getExpoPaths();
+    return fs.exists(CONFIG_FILE);
   } catch (error) {
-    throw new ExpoError(
-      ERROR_MESSAGES.EXPO.PROJECT_NOT_FOUND,
-      ERROR_CODE.EXPO.PROJECT_NOT_FOUND
-    );
+    return false;
   }
 }
 
 export async function checkExpoEnvFileExist(): Promise<boolean> {
-  const { expoEnvFilePath } = getPaths();
-  return fs.exists(expoEnvFilePath);
+  const { ENV_FILE } = await PATHS.getExpoPaths();
+  return fs.exists(ENV_FILE);
 }
 
-export async function createExpoProject(R2AConfig: R2AConfig) {
+export async function createExpoProject(projectName: string) {
   try {
-    const { R2ARootDir, reactProjectRootDir } = getPaths();
+    const R2ARootDir = PATHS.R2A.ROOT;
     fs.ensureDirSync(R2ARootDir);
 
     const progressBarPhases = [
@@ -76,9 +68,9 @@ export async function createExpoProject(R2AConfig: R2AConfig) {
         "npx",
         [
           "create-expo-app",
-          EXPO_DIR_NAME,
+          projectName,
           "--template",
-          EXPO_TEMPLATE_NAME,
+          FILE_NAMES.EXPO.TEMPLATE,
           "--yes",
         ],
         {
@@ -162,15 +154,14 @@ export async function createExpoProject(R2AConfig: R2AConfig) {
 }
 
 export const createExpoEnvFile = async () => {
-  const { expoEnvFilePath } = getPaths();
-  await fs.ensureFileSync(expoEnvFilePath);
+  const { ENV_FILE } = await PATHS.getExpoPaths();
+  await fs.ensureFileSync(ENV_FILE);
 };
 
 export const updateExpoEnvFile = async (env: Record<string, string>) => {
-  const { expoEnvFilePath } = getPaths();
-  await updateEnvFile(expoEnvFilePath, env);
+  const { ENV_FILE } = await PATHS.getExpoPaths();
+  await updateEnvFile(ENV_FILE, env);
 };
-
 export async function validateExpoProject(config: R2AConfig) {
   // Check if Expo project exists
   const projectExists = await checkExpoProjectExist();

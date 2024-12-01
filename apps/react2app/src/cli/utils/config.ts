@@ -1,13 +1,13 @@
 import type { R2AConfig } from "../types/index.js";
 import fs from "fs-extra";
-import { getPaths } from "./path.js";
+import { PATHS } from "./path.js";
 import { ConfigError } from "../errors/index.js";
 import { ERROR_MESSAGES } from "../errors/index.js";
 import { ERROR_CODE } from "../errors/index.js";
 
 export async function checkR2AConfigExist() {
-  const { R2AConfigPath } = getPaths();
-  return fs.existsSync(R2AConfigPath);
+  const configPath = PATHS.R2A.CONFIG_FILE;
+  return fs.existsSync(configPath);
 }
 
 /**
@@ -16,11 +16,11 @@ export async function checkR2AConfigExist() {
  */
 export async function loadR2AConfig(): Promise<R2AConfig | null> {
   try {
-    const { R2AConfigPath } = getPaths();
-    if (!fs.existsSync(R2AConfigPath)) {
+    const configPath = PATHS.R2A.CONFIG_FILE;
+    if (!fs.existsSync(configPath)) {
       return null;
     }
-    const { default: loadedConfig } = await import(R2AConfigPath);
+    const { default: loadedConfig } = await import(configPath);
     return loadedConfig;
   } catch (error) {
     throw new ConfigError(
@@ -32,10 +32,11 @@ export async function loadR2AConfig(): Promise<R2AConfig | null> {
 
 export const createR2AConfig = async (): Promise<R2AConfig> => {
   try {
-    const { R2AConfigTemplatePath, R2AConfigPath } = getPaths();
-    await fs.ensureFileSync(R2AConfigPath);
-    await fs.copyFileSync(R2AConfigTemplatePath, R2AConfigPath);
-    const { default: createdConfig } = await import(R2AConfigPath);
+    const templatePath = PATHS.CLI.CONFIG_TEMPLATE;
+    const configPath = PATHS.R2A.CONFIG_FILE;
+    await fs.ensureFileSync(configPath);
+    await fs.copyFileSync(templatePath, configPath);
+    const { default: createdConfig } = await import(configPath);
     return createdConfig;
   } catch (error) {
     throw error;
@@ -63,6 +64,7 @@ export async function initializeR2AConfig() {
 }
 
 export function removeR2AConfig() {
-  const { R2AConfigPath } = getPaths();
-  fs.unlinkSync(R2AConfigPath);
+  if (fs.existsSync(PATHS.R2A.CONFIG_FILE)) {
+    fs.unlinkSync(PATHS.R2A.CONFIG_FILE);
+  }
 }

@@ -1,5 +1,3 @@
-import { CommandConfig } from "../types";
-
 export const R2A_CONFIG_FILENAME = "react2app.config.js";
 
 export const REACT_FRAMEWORK = {

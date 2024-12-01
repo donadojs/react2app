@@ -3,7 +3,6 @@ import inquirer from "inquirer";
 import inquirerAutocomplete from "inquirer-autocomplete-prompt";
 import fs from "fs-extra";
 import { logger } from "../utils/logger.js";
-import { getPaths } from "../utils/path.js";
 import { PLATFORM, Platform } from "../constants/index.js";
 import {
   getNotInstalledPrograms,
@@ -11,13 +10,17 @@ import {
   PROGRAM,
   runSpawn,
 } from "../utils/program.js";
+import { PATHS } from "../utils/path.js";
 
 // Register the autocomplete prompt
 inquirer.registerPrompt("autocomplete", inquirerAutocomplete);
 
 const buildIOS = async () => {
-  const { iosRootDir, R2ACLIRootDir, expoRootDir, R2AConfigPath } =
-    await getPaths();
+  const expoPaths = await PATHS.getExpoPaths();
+  const expoRootDir = expoPaths.ROOT;
+  const iosRootDir = path.join(expoRootDir, "ios");
+  const R2ACLIRootDir = PATHS.CLI.ROOT;
+  const R2AConfigPath = PATHS.R2A.CONFIG_FILE;
 
   await prebuildExpoApp(PLATFORM.IOS, expoRootDir);
 
@@ -31,14 +34,14 @@ const buildIOS = async () => {
     }
   );
 
-  const R2AConfig = await import(R2AConfigPath);
-  await runSpawn("fastlane", ["ios", "build_dev", "--verbose"], {
+  const { default: R2AConfig } = await import(R2AConfigPath);
+  await runSpawn("fastlane", ["ios", "build", "--verbose"], {
     cwd: iosRootDir,
     stdio: "inherit",
     env: {
       ...process.env,
-      APP_NAME: "expoapp", // @todo fix to app name
-      TEAM_ID: "999999999",
+      APP_NAME: R2AConfig.displayName.replace(/\s/g, ""),
+      TEAM_ID: R2AConfig.ios.teamId,
     },
   });
 };
@@ -56,15 +59,18 @@ const buildAndroid = async () => {
 
 export const build = async () => {
   try {
-    const { expoRootDir, iosRootDir, R2ACLIRootDir } = await getPaths();
-
     // Check required programs
+    logger.info("Checking required programs...");
     const requiredPrograms = [PROGRAM.XCODE, PROGRAM.FASTLANE];
     const notInstalledPrograms =
       await getNotInstalledPrograms(requiredPrograms);
     if (notInstalledPrograms.length > 0) {
+      logger.warning("Some of the required programs are not installed.");
+      console.log(notInstalledPrograms);
       await handleNotInstalledPrograms(notInstalledPrograms); // feature test needed
     }
+
+    logger.success("All required programs are installed.");
 
     await buildIOS();
     // await buildAndroid();

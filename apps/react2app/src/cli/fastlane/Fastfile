@@ -4,23 +4,23 @@ default_platform(:ios)
 platform :ios do
   desc "Build iOS app for personal development"
   lane :build_dev do
-
-    gym(
+    build_app(
       workspace: "#{ENV['APP_NAME']}.xcworkspace",
       scheme: "#{ENV['APP_NAME']}",
       clean: true,
       configuration: "Debug",
-      export_method: "development",
       output_directory: "./build",
       output_name: "#{ENV['APP_NAME']}.ipa",
-      include_bitcode: false,
       include_symbols: true,
       skip_profile_detection: true,
+      xcargs: "-allowProvisioningUpdates",
       export_options: {
         method: "development",
         signing_style: "automatic",
-        compile_bitcode: false
-      }
+        compile_bitcode: false,
+        team_id: ENV["TEAM_ID"]
+      },
+      
     )
   end
 
@@ -28,7 +28,7 @@ platform :ios do
   lane :build do    
     update_project_team(
       path: "#{ENV['APP_NAME']}.xcodeproj",
-      teamid: "YOUR_TEAM_ID"  # Enter your team ID here
+      teamid: ENV["TEAM_ID"]
     )
     
     gym(
@@ -44,7 +44,18 @@ platform :ios do
       export_options: {
         method: "app-store",
         signing_style: "automatic", 
-      }
+        team_id: ENV["TEAM_ID"]
+      },
+      xcargs: "-allowProvisioningUpdates"
+    )
+  end
+end
+
+platform :android do
+  desc "Build Android app"
+  lane :build do
+    build_app(
+      project: "#{ENV['APP_NAME']}.a"
     )
   end
 end

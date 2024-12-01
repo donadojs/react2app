@@ -3,7 +3,7 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
 import Link from "next/link";
-import { insets } from "../AppLayout/AppLayout";
+import { insets } from "../AppLayout/AppLayout.js";
 
 interface Tab {
   path: string;

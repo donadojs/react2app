@@ -4,35 +4,33 @@ import getPort from "get-port";
 import { DevCommandOptions } from "../types/index.js";
 import { runDevServer } from "../utils/devServer.js";
 import { logger } from "../utils/logger.js";
-import { ensureReactProjectRootDir, getPaths } from "../utils/path.js";
-import { loadR2AConfig } from "../utils/r2aConfig.js";
-import { syncExpoProject, updateExpoEnvFile } from "../utils/expo.js";
-import { init } from "./init.js";
+import { loadR2AConfig } from "../utils/config.js";
+import { updateExpoEnvFile } from "../utils/expo.js";
 import { doctor } from "./doctor.js";
 import { addAppLayout } from "../utils/ux.js";
 import { cleanupR2A } from "../utils/cleanup.js";
 import { getLocalIPAddress, validatePort } from "../utils/network.js";
 import { frameworks } from "../config/frameworks.js";
+import { initR2AProject } from "../utils/init.js";
+import { PATHS, validateProjectRoot } from "../utils/path.js";
+import { syncR2AConfigWithExpo } from "../utils/sync.js";
 
 export const dev = async (
   platform: string,
   options: DevCommandOptions
 ): Promise<void> => {
   try {
-    const { reactProjectRootDir, expoRootDir } = getPaths();
-    ensureReactProjectRootDir();
+    validateProjectRoot();
     const R2AConfig = await loadR2AConfig();
     const isFirstExecution = !R2AConfig;
 
     if (isFirstExecution) {
-      await init();
+      await initR2AProject();
       await addAppLayout();
     } else {
       await doctor();
-      await syncExpoProject(R2AConfig);
+      await syncR2AConfigWithExpo();
     }
-
-    // Getting proper host and port
 
     const cliOptionHost = options.host;
     const cliOptionPort = options.port;
@@ -47,20 +45,18 @@ export const dev = async (
     const expoHost = cliOptionHost || defaultHost;
     const expoPort = await getPort({ port: frameworks.expo.defaultPort });
 
-    // Update Expo env file with webview url
     const webviewUrl = `http://${webHost}:${webPort}`;
     await updateExpoEnvFile({
       EXPO_PUBLIC_WEBVIEW_URL: webviewUrl,
     });
 
-    // Run dev server
     runDevServer({
       webServer: {
         framework: frameworks.nextjs,
         host: webHost,
         port: Number(webPort),
         debug: options.debug,
-        cwd: reactProjectRootDir,
+        cwd: PATHS.REACT.ROOT,
         logColor: chalk.blue,
       },
       appServer: {
@@ -68,7 +64,7 @@ export const dev = async (
         host: expoHost,
         port: Number(expoPort),
         debug: options.debug,
-        cwd: expoRootDir,
+        cwd: (await PATHS.getExpoPaths()).ROOT,
         logColor: chalk.yellow,
       },
     });

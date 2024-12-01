@@ -4,6 +4,7 @@ export const ERROR_MESSAGES = {
       "This command must be run in a root directory of your React project",
     NO_REACT_PROJECT: "There is no React project in the current directory",
     NO_PACKAGE_JSON: "package.json file not found in the current directory",
+    NO_R2A_CONFIG: "R2A config file not found in the current directory",
   },
   CONFIG: {
     LOAD_FAILED: "Failed to load R2A config",
@@ -29,6 +30,7 @@ export const ERROR_MESSAGES = {
 
 export const ERROR_CODE = {
   PROJECT: {
+    NO_R2A_CONFIG: "NO_R2A_CONFIG",
     NOT_PROJECT_ROOT: "NOT_PROJECT_ROOT",
     NO_REACT_PROJECT: "NO_REACT_PROJECT",
     NO_PACKAGE_JSON: "NO_PACKAGE_JSON",

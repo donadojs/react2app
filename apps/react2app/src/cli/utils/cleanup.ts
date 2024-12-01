@@ -1,19 +1,17 @@
 import { logger } from "./logger.js";
-import { getPaths } from "./path.js";
-import { removeR2AConfig } from "./r2aConfig.js";
+import { PATHS } from "./path.js";
+import { removeR2AConfig } from "./config.js";
 import fs from "fs-extra";
 
 export const cleanupR2A = async (silent: boolean = false): Promise<void> => {
   try {
-    const { R2ARootDir } = getPaths();
-
     // Remove react2app.config.js
     removeR2AConfig();
     !silent && logger.info("Removed react2app.config.js");
 
     // Remove react2app folder if it exists
-    if (fs.existsSync(R2ARootDir)) {
-      await fs.remove(R2ARootDir);
+    if (fs.existsSync(PATHS.R2A.ROOT)) {
+      await fs.remove(PATHS.R2A.ROOT);
       !silent && logger.info("Removed react2app folder");
     }
 

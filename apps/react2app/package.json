@@ -10,17 +10,18 @@
   },
   "types": "./dist/src/components/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "dev": "pnpm copy-data && tsc -w ",
-    "start": "node dist/bin/index.js",
+    "build": "pnpm build:cli && pnpm build:components",
+    "build:cli": "tsc -p tsconfig.cli.json && pnpm copy-data",
+    "build:components": "tsc -p tsconfig.json",
+    "dev": "pnpm copy-data && tsc -w -p tsconfig.cli.json",
+    "dev:components": "tsc -w -p tsconfig.json",
     "copy-data": "pnpm copy-templates && pnpm copy-fastlane",
     "copy-templates": "copyfiles -u 3 \"src/cli/templates/**/*\" dist/templates",
-    "copy-fastlane": "copyfiles -u 3 \"src/cli/fastlane/**/*\" dist/fastlane",
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "copy-fastlane": "copyfiles -u 3 \"src/cli/fastlane/**/*\" dist/fastlane"
   },
   "dependencies": {
     "@react2app/stack-navigation": "workspace:*",
+    "@types/conf": "^3.0.3",
     "@types/fs-extra": "^11.0.4",
     "@types/inquirer-autocomplete-prompt": "^3.0.3",
     "ansi-colors": "^4.1.3",
@@ -28,6 +29,7 @@
     "classnames": "^2.5.1",
     "cli-progress": "^3.12.0",
     "commander": "^11.1.0",
+    "conf": "^13.0.1",
     "fs-extra": "^11.2.0",
     "get-port": "^7.1.0",
     "inquirer": "^9.2.12",
