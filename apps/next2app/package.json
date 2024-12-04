@@ -6,14 +6,18 @@
     "next2app": "./dist/bin/index.js"
   },
   "exports": {
-    ".": "./dist/src/components/index.js"
+    ".": {
+      "types": "./dist/src/components/index.d.ts",
+      "default": "./dist/src/components/index.js"
+    }
   },
   "types": "./dist/src/components/index.d.ts",
   "scripts": {
     "build": "pnpm build:cli && pnpm build:components",
     "build:cli": "tsc -p tsconfig.cli.json && pnpm copy-data",
     "build:components": "tsc -p tsconfig.json",
-    "dev": "pnpm copy-data && tsc -w -p tsconfig.cli.json",
+    "dev": "pnpm copy-data && concurrently \"pnpm dev:cli\" \"pnpm dev:components\"",
+    "dev:cli": "tsc -w -p tsconfig.cli.json",
     "dev:components": "tsc -w -p tsconfig.json",
     "copy-data": "pnpm copy-templates && pnpm copy-fastlane",
     "copy-templates": "copyfiles -u 3 \"src/cli/templates/**/*\" dist/templates",

@@ -8,7 +8,7 @@ import { updateEnvFile } from "./env.js";
 import { ERROR_CODE } from "../errors/index.js";
 import { ERROR_MESSAGES } from "../errors/index.js";
 import { ExpoError } from "../errors/index.js";
-import { FILE_NAMES, DIRECTORY_NAMES } from "../config/constants.js";
+import { FILE_NAMES } from "../config/constants.js";
 import path from "path";
 
 /**
@@ -54,7 +54,7 @@ export async function createExpoProject(projectName: string) {
     ];
 
     const progressBar = new cliProgress.SingleBar({
-      format: `📦 Transforming React to App... |${colors.cyan("{bar}")}| {percentage}%`,
+      format: `📦 Transforming Next.js to App... |${colors.cyan("{bar}")}| {percentage}%`,
       barCompleteChar: "\u2588",
       barIncompleteChar: "\u2591",
       hideCursor: true,

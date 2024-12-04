@@ -1,5 +1,9 @@
 {
   "name": "@next2app/expo-template",
+  "publishConfig": {
+    "access": "public"
+  },
+  "private": false,
   "main": "expo-router/entry",
   "version": "1.0.4",
   "author": "donadojs",
