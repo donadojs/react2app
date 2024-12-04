@@ -3,7 +3,7 @@ import Logo from "./components/Logo";
 export default {
   head: (
     <>
-      <title>react2app</title>
+      <title>next2app</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta property="og:title" content="next2app" />
       <meta property="og:description" content="Next.js to App in 3 commands" />
