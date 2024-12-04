@@ -205,9 +205,9 @@ const LandingPage = () => {
                 Next.js to App in <br className="md:hidden" />3 commands
               </h1>
               <p className="text-gray-600  mx-auto mb-0 text-lg max-w-[320px] lg:max-w-[400px] lg:w-[400px] dark:text-gray-400">
-                Transform React, Next.js app {""}
+                Convert your Next.js web app to mobile apps
                 <br className="hidden lg:block" />
-                into IOS, Android apps with just 3 commands
+                instantly with 3 commands
               </p>
             </div>
             <div className="w-full max-w-xl mx-auto">
