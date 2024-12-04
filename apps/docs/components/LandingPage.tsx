@@ -140,7 +140,7 @@ const LandingPage = () => {
       <nav className="w-full z-50">
         <div className="max-w-4xl mx-auto px-4">
           <div className="flex items-center justify-between h-20 lg:mt-4">
-            <a href="/">
+            <a href="/" className="flex items-center">
               <Logo />
             </a>
 
@@ -154,7 +154,7 @@ const LandingPage = () => {
               >
                 Blog
               </a>
-              <button type="button">
+              <button type="button" className="flex items-center">
                 <svg
                   width="24"
                   height="24"
@@ -169,45 +169,63 @@ const LandingPage = () => {
 
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden text-gray-600"
+              className="md:hidden text-gray-600 relative w-6 h-6 flex items-center justify-center"
             >
-              {isMenuOpen ? (
-                <X className="w-5 h-5" />
-              ) : (
-                <Menu className="w-5 h-5" />
-              )}
+              <Menu
+                className={`w-6 h-6 absolute transition-all duration-300 ${
+                  isMenuOpen ? "opacity-0 rotate-90" : "opacity-100 rotate-0"
+                }`}
+              />
+              <X
+                className={`w-6 h-6 absolute transition-all duration-300 ${
+                  isMenuOpen ? "opacity-100 rotate-0" : "opacity-0 -rotate-90"
+                }`}
+              />
             </button>
           </div>
         </div>
 
-        {isMenuOpen && (
-          <div className="md:hidden bg-white/80 backdrop-blur-lg">
-            <div className="px-4 py-2 space-y-1">
-              <a href="/docs" className="block py-2 text-gray-600">
+        <div
+          className={`md:hidden fixed top-20 left-0 right-0 transform transition-all duration-300 ease-out pointer-events-none ${
+            isMenuOpen
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 -translate-y-4"
+          }`}
+          style={{
+            visibility: isMenuOpen ? "visible" : "hidden",
+          }}
+        >
+          <div
+            className={`mx-8 bg-white/80 backdrop-blur-lg rounded-xl dark:bg-black shadow-lg border border-gray-100 dark:border-gray-800 pointer-events-auto`}
+          >
+            <div className="px-4 py-4 space-y-1">
+              <a
+                href="/docs"
+                className="block py-2 text-gray-600 dark:text-gray-100 hover:text-gray-900 dark:hover:text-white transition-colors"
+              >
                 Docs
               </a>
-              <a href="https://github.com" className="block py-2 text-gray-600">
+              <a
+                href="https://github.com"
+                className="block py-2 text-gray-600 dark:text-gray-100 hover:text-gray-900 dark:hover:text-white transition-colors"
+              >
                 GitHub
               </a>
-              <button className="w-full mt-2 bg-black text-white px-4 py-2 rounded-lg">
-                Get Started
-              </button>
             </div>
           </div>
-        )}
+        </div>
       </nav>
 
       <div className="flex-1 flex items-center justify-center">
         <div className="max-w-4xl mx-auto px-4 w-full">
           <div className="grid grid-cols-1 gap-12">
             <div className="text-center">
-              <h1 className="text-4xl mt-8 md:text-5xl md:leading-normal font-bold tracking-tight mb-6 bg-gradient-to-r from-gray-900 to-gray-700 text-transparent bg-clip-text leading-normal dark:text-gray-300">
+              <h1 className="text-4xl mt-8 md:text-5xl font-bold tracking-tight mb-6 bg-gradient-to-r from-gray-900 to-gray-700 text-transparent bg-clip-text leading-tight dark:text-gray-300">
                 Next.js to App in <br className="md:hidden" />3 commands
               </h1>
               <p className="text-gray-600  mx-auto mb-0 text-lg max-w-[320px] lg:max-w-[400px] lg:w-[400px] dark:text-gray-400">
-                Convert your Next.js web app to mobile apps
-                <br className="hidden lg:block" />
-                instantly with 3 commands
+                Build native apps effortlessly <br className="block" />
+                just using Next.js
               </p>
             </div>
             <div className="w-full max-w-xl mx-auto">
