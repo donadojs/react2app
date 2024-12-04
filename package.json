@@ -1,5 +1,5 @@
 {
-  "name": "@react2app/monorepo",
+  "name": "@next2app/monorepo",
   "private": true,
   "scripts": {
     "build": "turbo build",

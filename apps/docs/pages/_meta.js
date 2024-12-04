@@ -15,7 +15,7 @@ export default {
     type: "page",
   },
   contact: {
-    title: "Blog ↗",
+    title: "Ask a question ↗",
     type: "page",
     href: "https://twitter.com/donadojsx",
     newWindow: true,

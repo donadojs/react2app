@@ -5,8 +5,8 @@ export default {
     <>
       <title>react2app</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta property="og:title" content="react2app" />
-      <meta property="og:description" content="React to App in 3 commands" />
+      <meta property="og:title" content="next2app" />
+      <meta property="og:description" content="Next.js to App in 3 commands" />
       <link
         rel="icon"
         type="image/png"
@@ -25,6 +25,6 @@ export default {
   ),
   logo: <Logo />,
   project: {
-    link: "https://github.com/donadojs/react2app",
+    link: "https://github.com/donadojs/next2app",
   },
 };

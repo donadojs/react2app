@@ -1,5 +1,5 @@
 {
-  "name": "docs",
+  "name": "@next2app/docs",
   "version": "0.0.3",
   "private": true,
   "scripts": {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Logo from "./Logo";
-import { Menu, X, Terminal, Check } from "lucide-react";
+import { Menu, X, Check } from "lucide-react";
 
 const TypewriterText = ({ text, delay, onComplete }) => {
   const [currentText, setCurrentText] = useState("");
@@ -29,15 +29,15 @@ const CommandTerminal = () => {
 
   const commands = [
     {
-      cmd: "npx react2app dev",
+      cmd: "npx next2app dev",
       response: ["🚀 Server running at http://localhost:3000"],
     },
     {
-      cmd: "npx react2app build",
+      cmd: "npx next2app build",
       response: ["📦 Build completed successfully!(aab, ipa)"],
     },
     {
-      cmd: "npx react2app deploy",
+      cmd: "npx next2app deploy",
       response: ["🎉 Submitted to AppStore, PlayStore!"],
     },
   ];
