@@ -41,6 +41,7 @@ export const initR2AProject = async () => {
     await fs.writeFile(PATHS.R2A.CONFIG_FILE, configContent);
 
     // Update react project .env.local file
+    await fs.ensureFile(PATHS.REACT.ENV_FILE);
     await updateEnvFile(PATHS.REACT.ENV_FILE, {
       R2A_IOS_TEAM_ID: "PUT_YOUR_TEAM_ID_HERE",
     });
