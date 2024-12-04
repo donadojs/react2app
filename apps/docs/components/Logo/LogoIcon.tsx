@@ -1,15 +1,8 @@
 import * as React from "react";
 
-function LogoIcon({ className, width = "28", height = "29", ...props }) {
+function LogoIcon1({ width, height }: { width: number; height: number }) {
   return (
-    <svg
-      viewBox="0 0 28 29"
-      width={width}
-      height={height}
-      fill="none"
-      className={className}
-      {...props}
-    >
+    <svg width={width} height={height} fill="none" viewBox="0 0 30 29">
       <path
         d="M17.522 22.48c-2.377-.883-4.822-1.019-7.063-.407-1.562.407-3.056 1.222-4.414 2.24l-.951.816-.272.271.611.544c.068 0 .068.068.136.136.136.136.272.203.476.34l.407.27.407-.339c.068-.068.204-.203.34-.271 1.223-1.02 2.58-1.698 4.007-2.038 1.834-.475 3.803-.407 5.773.34 1.63.611 4.958 1.358 8.965-.34l.136-.068.203-.204c0-.067.068-.067.136-.135.34-.408.68-.815.951-1.29l1.358-2.106-2.173 1.222c-3.192 1.766-6.112 2.106-9.033 1.02z"
         fill="url(#prefix__paint0_linear_202_4)"
@@ -47,8 +40,8 @@ function LogoIcon({ className, width = "28", height = "29", ...props }) {
           y2={31.157}
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#4362FE" />
-          <stop offset={1} stopColor="#0A33FE" />
+          <stop />
+          <stop offset={1} />
         </linearGradient>
         <linearGradient
           id="prefix__paint1_linear_202_4"
@@ -58,8 +51,8 @@ function LogoIcon({ className, width = "28", height = "29", ...props }) {
           y2={25.815}
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#4362FE" />
-          <stop offset={1} stopColor="#0A33FE" />
+          <stop />
+          <stop offset={1} />
         </linearGradient>
         <linearGradient
           id="prefix__paint2_linear_202_4"
@@ -69,8 +62,8 @@ function LogoIcon({ className, width = "28", height = "29", ...props }) {
           y2={21.031}
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#4362FE" />
-          <stop offset={1} stopColor="#0A33FE" />
+          <stop />
+          <stop offset={1} />
         </linearGradient>
         <linearGradient
           id="prefix__paint3_linear_202_4"
@@ -80,8 +73,8 @@ function LogoIcon({ className, width = "28", height = "29", ...props }) {
           y2={31.235}
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#4362FE" />
-          <stop offset={1} stopColor="#0A33FE" />
+          <stop />
+          <stop offset={1} />
         </linearGradient>
         <linearGradient
           id="prefix__paint4_linear_202_4"
@@ -91,8 +84,8 @@ function LogoIcon({ className, width = "28", height = "29", ...props }) {
           y2={29.441}
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#4362FE" />
-          <stop offset={1} stopColor="#0A33FE" />
+          <stop />
+          <stop offset={1} />
         </linearGradient>
         <linearGradient
           id="prefix__paint5_linear_202_4"
@@ -102,8 +95,8 @@ function LogoIcon({ className, width = "28", height = "29", ...props }) {
           y2={12.42}
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#4362FE" />
-          <stop offset={1} stopColor="#0A33FE" />
+          <stop />
+          <stop offset={1} />
         </linearGradient>
         <linearGradient
           id="prefix__paint6_linear_202_4"
@@ -113,13 +106,13 @@ function LogoIcon({ className, width = "28", height = "29", ...props }) {
           y2={5.164}
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#4362FE" />
-          <stop offset={1} stopColor="#0A33FE" />
+          <stop />
+          <stop offset={1} />
         </linearGradient>
       </defs>
     </svg>
   );
 }
 
-const MemoLogo = React.memo(LogoIcon);
-export default MemoLogo;
+const MemoLogoIcon1 = React.memo(LogoIcon1);
+export default MemoLogoIcon1;

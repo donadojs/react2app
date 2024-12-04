@@ -201,10 +201,10 @@ const LandingPage = () => {
         <div className="max-w-4xl mx-auto px-4 w-full">
           <div className="grid grid-cols-1 gap-12">
             <div className="text-center">
-              <h1 className="text-3xl mt-8 md:text-5xl font-bold tracking-tight mb-6 bg-gradient-to-r from-gray-900 to-gray-700 text-transparent bg-clip-text">
-                React to App in <br className="md:hidden" />3 commands
+              <h1 className="text-4xl mt-8 md:text-5xl md:leading-normal font-bold tracking-tight mb-6 bg-gradient-to-r from-gray-900 to-gray-700 text-transparent bg-clip-text leading-normal dark:text-gray-300">
+                Next.js to App in <br className="md:hidden" />3 commands
               </h1>
-              <p className="text-gray-600  mx-auto mb-0 text-lg max-w-[320px] lg:max-w-[400px] lg:w-[400px]">
+              <p className="text-gray-600  mx-auto mb-0 text-lg max-w-[320px] lg:max-w-[400px] lg:w-[400px] dark:text-gray-400">
                 Transform React, Next.js app {""}
                 <br className="hidden lg:block" />
                 into IOS, Android apps with just 3 commands
