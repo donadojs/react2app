@@ -61,9 +61,9 @@ importers:
         specifier: ^5.6.3
         version: 5.7.2
 
-  apps/react2app:
+  apps/next2app:
     dependencies:
-      '@react2app/stack-navigation':
+      '@next2app/stack-navigation':
         specifier: workspace:*
         version: link:../../packages/stack-navigation
       '@types/conf':
@@ -121,7 +121,7 @@ importers:
       '@jest/globals':
         specifier: ^29.7.0
         version: 29.7.0
-      '@react2app/typescript-config':
+      '@next2app/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
       '@types/cli-progress':
@@ -481,7 +481,7 @@ importers:
 
   packages/stack-navigation:
     devDependencies:
-      '@react2app/typescript-config':
+      '@next2app/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
       '@rollup/plugin-commonjs':
@@ -529,10 +529,10 @@ importers:
         specifier: ^18.2.0
         version: 18.3.1
     devDependencies:
-      '@react2app/eslint-config':
+      '@next2app/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
-      '@react2app/typescript-config':
+      '@next2app/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
       '@turbo/gen':
@@ -1619,7 +1619,7 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
     dependencies:
-      '@babel/types': 7.25.6
+      '@babel/types': 7.26.0
 
   /@babel/parser@7.26.2:
     resolution: {integrity: sha512-DWMCZH9WA4Maitz2q21SRKHo9QXZxkDsbNZoVD62gusNtNBBqDg9i7uOhASfTfIGNzW+O+r7+jAlM8dwphcJKQ==}
@@ -2762,7 +2762,7 @@ packages:
       '@babel/generator': 7.26.2
       '@babel/parser': 7.25.6
       '@babel/template': 7.25.9
-      '@babel/types': 7.25.6
+      '@babel/types': 7.26.0
       debug: 4.3.7(supports-color@8.1.1)
       globals: 11.12.0
     transitivePeerDependencies:

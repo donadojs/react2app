@@ -1,5 +1,5 @@
 {
-  "extends": "@react2app/typescript-config/react-library.json",
+  "extends": "@next2app/typescript-config/react-library.json",
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
 }

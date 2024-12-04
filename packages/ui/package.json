@@ -1,5 +1,5 @@
 {
-  "name": "@react2app/ui",
+  "name": "@next2app/ui",
   "version": "0.0.0",
   "private": true,
   "exports": {
@@ -12,8 +12,8 @@
     "generate:component": "turbo gen react-component"
   },
   "devDependencies": {
-    "@react2app/eslint-config": "workspace:*",
-    "@react2app/typescript-config": "workspace:*",
+    "@next2app/eslint-config": "workspace:*",
+    "@next2app/typescript-config": "workspace:*",
     "@turbo/gen": "^1.12.4",
     "@types/node": "^20.11.24",
     "@types/eslint": "^8.56.5",

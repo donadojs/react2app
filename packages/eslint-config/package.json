@@ -1,5 +1,5 @@
 {
-  "name": "@react2app/eslint-config",
+  "name": "@next2app/eslint-config",
   "version": "0.0.0",
   "private": true,
   "files": [

@@ -1,5 +1,5 @@
 {
-  "name": "@react2app/expo-template",
+  "name": "@next2app/expo-template",
   "main": "expo-router/entry",
   "version": "1.0.4",
   "author": "donadojs",
