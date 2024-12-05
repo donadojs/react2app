@@ -1,4 +1,4 @@
-# Next2app Docs
+# next2app Docs
 
 This is the documentation site for Next2app.
 
