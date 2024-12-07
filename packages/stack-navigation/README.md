@@ -116,7 +116,7 @@ Found a bug? Want to add something cool? PRs are welcome!
 
 ## More...
 
-Currently, this is a work in progress. I'm keep working on it to make it more robust and flexible. Want to know more about it? DM me on [Twitter](https://x.com/donadojsx)
+Currently, this is a work in progress. I'm keep working on it to make it more robust and flexible.
 
 ## License
 
