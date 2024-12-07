@@ -1,6 +1,9 @@
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
+import postcss from "rollup-plugin-postcss";
+import tailwindcss from "tailwindcss";
+import autoprefixer from "autoprefixer";
 
 /** @type {import('rollup').RollupOptions} */
 export default {
@@ -27,6 +30,13 @@ export default {
     "next/navigation",
   ],
   plugins: [
+    postcss({
+      plugins: [tailwindcss("./tailwind.config.js"), autoprefixer()],
+      extract: "styles.css",
+      modules: true,
+      autoModules: true,
+      minimize: true,
+    }),
     resolve({
       browser: true,
       extensions: [".js", ".jsx", ".ts", ".tsx"],

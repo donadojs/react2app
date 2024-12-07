@@ -1,12 +1,18 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useNavigationState } from "../hooks/useNavigationState";
-import { usePopStateListener } from "../hooks/usePopStateListener";
-import { usePageTransition } from "../hooks/usePageTransition";
-import { CurrentPageLayer } from "./CurrentPageLayer";
-import { PreviousPageLayer } from "./PreviousPageLayer";
+import { TopView } from "./TopView";
+import { BottomView } from "./BottomView";
 import type { StackNavigationProps } from "../types";
+import { usePageTransition } from "../hooks/usePageTransition";
+import useNavigationType, { NAVIGATION_TYPE } from "../hooks/useNavigationType";
+
+export const PAGE_CONTAINER_ID = "page-container";
+
+export interface View {
+  path: string;
+  pageCache: string | null;
+}
 
 export default function StackNavigation({
   children,
@@ -14,31 +20,33 @@ export default function StackNavigation({
   animationDuration = 300,
 }: StackNavigationProps) {
   const pathname = usePathname();
-  const { previousPage, currentPage, isNavigatingBackRef } =
-    useNavigationState();
 
-  usePopStateListener(isNavigatingBackRef, animationDuration);
-  const isAnimating = usePageTransition(
+  // Disable animation for back navigation
+  const navigationType = useNavigationType(animationDuration);
+
+  // Handle page transition
+  const { bottomView, isAnimating } = usePageTransition(
     pathname,
-    currentPage,
-    previousPage,
     animationDuration
   );
+
+  // Get whether the current page should animate
+  const shouldAnimate =
+    isAnimating &&
+    !animationDisabledUrls.includes(pathname) &&
+    navigationType === NAVIGATION_TYPE.FORWARD;
 
   return (
     <main className="relative w-full min-h-screen overflow-x-hidden">
       <div className="w-full min-h-screen relative">
-        <CurrentPageLayer
-          isAnimating={isAnimating}
-          pathname={pathname}
-          animationDisabledUrls={animationDisabledUrls}
-          isNavigatingBack={isNavigatingBackRef.current}
+        <TopView
+          pageContainerId={PAGE_CONTAINER_ID}
+          isAnimating={shouldAnimate}
         >
           {children}
-        </CurrentPageLayer>
-        <PreviousPageLayer
-          pageCache={previousPage.current?.pageCache ?? null}
-        />
+          <div className="h-[500px] w-10 bg-red-300" />
+        </TopView>
+        <BottomView pageCache={bottomView.current?.pageCache ?? null} />
       </div>
     </main>
   );
