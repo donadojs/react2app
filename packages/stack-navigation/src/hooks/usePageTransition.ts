@@ -1,25 +1,50 @@
 "use client";
 
 import { useLayoutEffect, useRef, useState } from "react";
-import { PAGE_CONTAINER_ID, View } from "../components/StackNavigation";
+import { PAGE_CONTAINER_ID } from "../constants/config";
+import { ViewData } from "../types";
 
 export function usePageTransition(pathname: string, animationDuration: number) {
-  const bottomView = useRef<View | null>(null);
-  const upcomingBottomView = useRef<View | null>(null);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const bottomViewData = useRef<ViewData | null>(null);
+  const upcomingBottomViewData = useRef<ViewData | null>(null);
+  const [isTransitionReady, setIsTransitionReady] = useState(false);
 
   useLayoutEffect(() => {
-    // apply previously saved upcomingBottomView to bottomView
-    bottomView.current = upcomingBottomView.current;
-    // save current page to upcomingBottomView
-    upcomingBottomView.current = {
+    let requestAnimationFrameId: number;
+    const handleScroll = () => {
+      requestAnimationFrameId = requestAnimationFrame(() => {
+        if (upcomingBottomViewData.current) {
+          upcomingBottomViewData.current.scrollPosition = {
+            x: window.scrollX,
+            y: window.scrollY,
+          };
+        }
+      });
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(requestAnimationFrameId);
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    // apply previously saved upcomingBottomViewData to bottomViewData
+    console.log("upcomingBottomViewData", upcomingBottomViewData.current);
+    bottomViewData.current = upcomingBottomViewData.current;
+    // save current page to upcomingBottomViewData
+    upcomingBottomViewData.current = {
       path: pathname,
       pageCache: document.getElementById(PAGE_CONTAINER_ID)?.innerHTML || null,
+      scrollPosition: { x: window.scrollX, y: window.scrollY },
     };
     // start and stop animation
-    setIsAnimating(true);
-    const timer = setTimeout(() => setIsAnimating(false), animationDuration);
+    setIsTransitionReady(true);
+    const timer = setTimeout(
+      () => setIsTransitionReady(false),
+      animationDuration
+    );
     return () => clearTimeout(timer);
-  }, [pathname, upcomingBottomView, bottomView, animationDuration]);
-  return { bottomView, upcomingBottomView, isAnimating };
+  }, [pathname, upcomingBottomViewData, bottomViewData, animationDuration]);
+  return { bottomViewData, upcomingBottomViewData, isTransitionReady };
 }

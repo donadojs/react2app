@@ -1,13 +1,31 @@
+import { forwardRef, useLayoutEffect, ForwardedRef } from "react";
+import { ViewData } from "../types";
+import "../styles.css";
+
 interface BottomViewProps {
-  pageCache: string | null;
+  viewData: ViewData | null;
 }
 
-export function BottomView({ pageCache }: BottomViewProps) {
-  if (!pageCache) return null;
-  return (
-    <div
-      className="absolute top-0 left-0 right-0 min-h-screen z-10 bg-blue-300"
-      dangerouslySetInnerHTML={{ __html: pageCache }}
-    />
-  );
-}
+const BottomView = forwardRef<HTMLDivElement, BottomViewProps>(
+  ({ viewData }, ref: ForwardedRef<HTMLDivElement>) => {
+    useLayoutEffect(() => {
+      if (!ref || typeof ref !== "object" || !ref.current) return;
+      ref.current.scrollTo({
+        top: viewData?.scrollPosition?.y ?? 0,
+        left: viewData?.scrollPosition?.x ?? 0,
+        behavior: "instant",
+      });
+    }, [viewData, ref]);
+
+    if (!viewData) return null;
+    return (
+      <div
+        ref={ref}
+        className="absolute top-0 left-0 right-0 h-screen z-10  overflow-scroll hide-scrollbar"
+        dangerouslySetInnerHTML={{ __html: viewData.pageCache ?? "" }}
+      />
+    );
+  }
+);
+
+export default BottomView;

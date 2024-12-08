@@ -10,9 +10,10 @@ export const FILE_NAMES = {
     CONFIG: "next2app.config.js",
     CONFIG_TEMPLATE: "next2app.config.template.js",
   },
-  REACT: {
+  NEXTJS: {
     ENV: ".env.local",
-    CONFIG: "next.config.js",
+    CONFIG: "next.config.ts",
+    LAYOUT: "layout.tsx",
   },
   EXPO: {
     ENV: ".env",

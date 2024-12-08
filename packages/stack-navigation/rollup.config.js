@@ -15,8 +15,17 @@ export default {
     preserveModulesRoot: "src",
     entryFileNames: "[name].js",
     sourcemap: true,
+    exports: "named",
     banner: (chunk) => {
-      if (chunk.fileName.includes("StackNavigation")) {
+      if (
+        chunk.fileName.includes("StackNavigation") ||
+        chunk.fileName.includes("TopView") ||
+        chunk.fileName.includes("BottomView") ||
+        chunk.fileName.includes("StackContainer") ||
+        chunk.fileName.includes("usePageTransition") ||
+        chunk.fileName.includes("useNavigationState") ||
+        chunk.fileName.includes("useNavigationType")
+      ) {
         return '"use client";\n';
       }
       return "";
@@ -36,6 +45,7 @@ export default {
       modules: true,
       autoModules: true,
       minimize: true,
+      inject: false,
     }),
     resolve({
       browser: true,

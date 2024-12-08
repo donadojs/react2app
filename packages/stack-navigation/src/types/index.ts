@@ -8,3 +8,9 @@ export interface StackNavigationProps {
   animationDisabledUrls?: string[];
   animationDuration?: number;
 }
+
+export interface ViewData {
+  path: string;
+  pageCache: string | null;
+  scrollPosition?: { x: number; y: number };
+}

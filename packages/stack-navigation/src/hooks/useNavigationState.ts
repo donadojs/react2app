@@ -1,11 +1,11 @@
 "use client";
 
 import { useRef } from "react";
-import { Page } from "../types";
+import { ViewData } from "../types";
 
 export function useNavigationState() {
-  const bottomView = useRef<Page | null>(null);
-  const topView = useRef<Page | null>(null);
+  const bottomView = useRef<ViewData | null>(null);
+  const topView = useRef<ViewData | null>(null);
   const isNavigatingBackRef = useRef(false);
 
   return {

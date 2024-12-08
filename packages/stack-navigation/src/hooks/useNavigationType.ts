@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, useLayoutEffect } from "react";
 
 export const NAVIGATION_TYPE = {

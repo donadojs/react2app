@@ -26,7 +26,6 @@ export const dev = async (
 
     if (isFirstExecution) {
       await initN2AProject();
-      await addAppLayout();
     } else {
       await doctor();
       await syncN2AConfigWithExpo();
@@ -56,7 +55,7 @@ export const dev = async (
         host: webHost,
         port: Number(webPort),
         debug: options.debug,
-        cwd: PATHS.REACT.ROOT,
+        cwd: PATHS.NEXTJS.ROOT,
         logColor: chalk.blue,
       },
       appServer: {

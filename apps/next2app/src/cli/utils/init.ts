@@ -8,6 +8,7 @@ import { convertPackageNameToDisplayName } from "./packageName.js";
 import { convertPackageNameToProjectName } from "./packageName.js";
 import fs from "fs-extra";
 import { syncN2AConfigWithExpo } from "./sync.js";
+import { addAppLayout } from "./ux.js";
 
 export const initN2AProject = async () => {
   try {
@@ -41,8 +42,8 @@ export const initN2AProject = async () => {
     await fs.writeFile(PATHS.N2A.CONFIG_FILE, configContent);
 
     // Update react project .env.local file
-    await fs.ensureFile(PATHS.REACT.ENV_FILE);
-    await updateEnvFile(PATHS.REACT.ENV_FILE, {
+    await fs.ensureFile(PATHS.NEXTJS.ENV_FILE);
+    await updateEnvFile(PATHS.NEXTJS.ENV_FILE, {
       N2A_IOS_TEAM_ID: "PUT_YOUR_TEAM_ID_HERE",
     });
 
@@ -53,6 +54,9 @@ export const initN2AProject = async () => {
 
     // Setup Expo env file
     await createExpoEnvFile();
+
+    // Add <AppLayout> to the root of the project
+    await addAppLayout();
   } catch (error) {
     throw error;
   }

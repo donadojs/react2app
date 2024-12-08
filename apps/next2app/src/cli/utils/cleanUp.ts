@@ -2,6 +2,7 @@ import { logger } from "./logger.js";
 import { PATHS } from "./path.js";
 import { removeN2AConfig } from "./config.js";
 import fs from "fs-extra";
+import { removeAppLayout } from "./ux.js";
 
 export const cleanupN2A = async (silent: boolean = false): Promise<void> => {
   try {
@@ -14,6 +15,8 @@ export const cleanupN2A = async (silent: boolean = false): Promise<void> => {
       await fs.remove(PATHS.N2A.ROOT);
       !silent && logger.info("Removed next2app folder");
     }
+
+    removeAppLayout();
 
     !silent && logger.success("Clean completed successfully");
   } catch (error) {

@@ -58,11 +58,12 @@ export const PATHS = {
     ROOT: path.join(process.cwd(), DIRECTORY_NAMES.N2A),
     CONFIG_FILE: path.join(process.cwd(), FILE_NAMES.N2A.CONFIG),
   },
-  REACT: {
+  NEXTJS: {
     ROOT: process.cwd(),
     SRC: path.join(process.cwd(), "src"),
-    ENV_FILE: path.join(process.cwd(), FILE_NAMES.REACT.ENV),
-    CONFIG_FILE: path.join(process.cwd(), FILE_NAMES.REACT.CONFIG),
+    ENV_FILE: path.join(process.cwd(), FILE_NAMES.NEXTJS.ENV),
+    CONFIG_FILE: path.join(process.cwd(), FILE_NAMES.NEXTJS.CONFIG),
+    LAYOUT_FILE: path.join(process.cwd(), "/app", FILE_NAMES.NEXTJS.LAYOUT),
   },
   getExpoPaths: async () => {
     const expoAppName = await getExpoAppNameFromConfig();

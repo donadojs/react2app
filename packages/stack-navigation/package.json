@@ -2,9 +2,14 @@
   "name": "@next2app/stack-navigation",
   "description": "Smooth native-like page transitions for Next.js",
   "version": "0.1.0",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
   "type": "module",
   "sideEffects": false,
   "author": "donadojs",
@@ -25,6 +30,7 @@
     "dist/styles.css"
   ],
   "scripts": {
+    "clean": "rm -rf dist",
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "lint": "eslint src/",
@@ -52,5 +58,8 @@
     "tailwindcss": "^3.4.14",
     "tslib": "^2.8.1",
     "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "react-device-detect": "^2.2.3"
   }
 }
