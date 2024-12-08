@@ -2,7 +2,7 @@
 
 next2app is a tool that converts Next.js app into cool native apps(IOS,Android) with minimal works. Transform your Next.js app into a mobile app instantly!
 
-## 🚀 Features
+## Features
 
 - **One-Command Conversion**: Transform web apps into mobile apps instantly
 - **Live Development**: Test your app in real-time using our mobile preview apps
@@ -11,14 +11,14 @@ next2app is a tool that converts Next.js app into cool native apps(IOS,Android) 
 - **Zero Configuration**: Works out of the box with sensible defaults
 - **Customizable**: Extensive configuration options available
 
-## 📋 Prerequisites
+## Prerequisites
 
 - Node.js 14.0 or higher
 - npm or yarn package manager
 - Next.js project
 - iOS App Store / Google Play Store developer accounts (for deployment)
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 npm install next2app
@@ -43,8 +43,9 @@ npx next2app build
 ```
 
 Creates production-ready builds for both iOS and Android platforms.
+** currently only supports iOS **
 
-### 3. Deploy
+### 3. Deploy(in development)
 
 ```bash
 npx next2app deploy
@@ -56,33 +57,28 @@ Automates the app store submission process with guided form filling.
 
 Create `next2app.config.js` in your project root:
 
-```javascript
-module.exports = {
-  port: 3000,
-  output: "build",
-  publicPath: "/",
-  app: {
-    name: "My App",
-    version: "1.0.0",
-    identifier: "com.myapp.app",
-    icon: "./assets/icon.png",
+````javascript
+const config = {
+  projectName: null, // your project name
+  displayName: null, // your project display name
+  appId: null, // your project app id
+  version: "1.0.0", // your project version
+  design: {
+    icon: "./assets/images/icon.png", // your project icon
+    splash: "./assets/images/splash.png", // your project splash screen
   },
-  // Additional configuration options
+  ios: {
+    teamId: process.env.N2A_IOS_TEAM_ID,
+  },
 };
+
+module.exports = config;
 ```
 
-## 📚 Documentation
-
-For detailed documentation, visit:
-
-- [Getting Started](https://next2app.dev/docs/getting-started)
-- [Configuration Guide](https://next2app.dev/docs/configuration)
-- [API Reference](https://next2app.dev/docs/api)
-- [Deployment Guide](https://next2app.dev/docs/deployment)
 
 ## 🐛 Issue Reporting
 
-Found a bug? Please report it on our [GitHub Issues](https://github.com/next2app/issues) page.
+Found a bug? Please report it on our [GitHub Issues](https://github.com/donadojs/next2app/issues) page.
 
 ## 📄 License
 
@@ -91,3 +87,4 @@ next2app is [MIT licensed](LICENSE).
 ---
 
 Made with ❤️ by the Next2app Team
+````
