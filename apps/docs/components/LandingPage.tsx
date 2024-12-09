@@ -148,10 +148,7 @@ const LandingPage = () => {
               <a href="/docs" className="text-gray-600 hover:text-gray-900">
                 Docs
               </a>
-              <a
-                href="https://github.com"
-                className="text-gray-600 hover:text-gray-900"
-              >
+              <a href="/blog" className="text-gray-600 hover:text-gray-900">
                 Blog
               </a>
               <button type="button" className="flex items-center">
@@ -206,7 +203,7 @@ const LandingPage = () => {
                 Docs
               </a>
               <a
-                href="https://github.com"
+                href="https://github.com/donadojs/next2app"
                 className="block py-2 text-gray-600 dark:text-gray-100 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
                 GitHub
