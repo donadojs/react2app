@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Logo from "./Logo";
-import { Menu, X, Check } from "lucide-react";
+import {
+  Menu,
+  X,
+  Check,
+  ExternalLink,
+  LucideExternalLink,
+  ArrowUpRight,
+} from "lucide-react";
 
 const TypewriterText = ({ text, delay, onComplete }) => {
   const [currentText, setCurrentText] = useState("");
@@ -148,10 +155,20 @@ const LandingPage = () => {
               <a href="/docs" className="text-gray-600 hover:text-gray-900">
                 Docs
               </a>
-              <a href="/blog" className="text-gray-600 hover:text-gray-900">
+              <a
+                href="/blog"
+                target="_blank"
+                className="text-gray-600 hover:text-gray-900 inline-flex items-center gap-1"
+              >
                 Blog
               </a>
-              <button type="button" className="flex items-center">
+              <button
+                type="button"
+                className="flex items-center"
+                onClick={() =>
+                  window.open("https://github.com/donadojs/next2app", "_blank")
+                }
+              >
                 <svg
                   width="24"
                   height="24"
