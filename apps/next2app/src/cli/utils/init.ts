@@ -41,10 +41,12 @@ export const initN2AProject = async () => {
       .replace(/appId:\s*null/, `appId: "${appId}"`);
     await fs.writeFile(PATHS.N2A.CONFIG_FILE, configContent);
 
-    // Update react project .env.local file
+    // Update Next.js project .env.local file
     await fs.ensureFile(PATHS.NEXTJS.ENV_FILE);
     await updateEnvFile(PATHS.NEXTJS.ENV_FILE, {
       N2A_IOS_TEAM_ID: "PUT_YOUR_TEAM_ID_HERE",
+      N2A_ANDROID_KEYSTORE_PASSWORD: "PUT_YOUR_KEYSTORE_PASSWORD_HERE",
+      N2A_ANDROID_KEY_PASSWORD: "PUT_YOUR_KEY_PASSWORD_HERE",
     });
 
     // Setup Expo project

@@ -85,6 +85,9 @@ importers:
       '@types/conf':
         specifier: ^3.0.3
         version: 3.0.3
+      '@types/dotenv':
+        specifier: ^8.2.3
+        version: 8.2.3
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4
@@ -109,6 +112,9 @@ importers:
       conf:
         specifier: ^13.0.1
         version: 13.0.1
+      dotenv:
+        specifier: ^16.4.7
+        version: 16.4.7
       fs-extra:
         specifier: ^11.2.0
         version: 11.2.0
@@ -2104,7 +2110,7 @@ packages:
     dependencies:
       chalk: 4.1.2
       debug: 4.3.7
-      dotenv: 16.4.5
+      dotenv: 16.4.7
       dotenv-expand: 11.0.7
       getenv: 1.0.0
     transitivePeerDependencies:
@@ -4962,6 +4968,13 @@ packages:
     resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
     dependencies:
       '@types/ms': 0.7.34
+    dev: false
+
+  /@types/dotenv@8.2.3:
+    resolution: {integrity: sha512-g2FXjlDX/cYuc5CiQvyU/6kkbP1JtmGzh0obW50zD7OKeILVL0NSpPWLXVfqoAGQjom2/SLLx9zHq0KXvD6mbw==}
+    deprecated: This is a stub types definition. dotenv provides its own type definitions, so you do not need this installed.
+    dependencies:
+      dotenv: 16.4.7
     dev: false
 
   /@types/draco3d@1.4.10:
@@ -8097,15 +8110,15 @@ packages:
     resolution: {integrity: sha512-zIHwmZPRshsCdpMDyVsqGmgyP0yT8GAgXUnkdAoJisxvf33k7yO6OuoKmcTGuXPWSsm8Oh88nZicRLA9Y0rUeA==}
     engines: {node: '>=12'}
     dependencies:
-      dotenv: 16.4.5
+      dotenv: 16.4.7
 
   /dotenv@16.0.3:
     resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
     engines: {node: '>=12'}
     dev: true
 
-  /dotenv@16.4.5:
-    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
+  /dotenv@16.4.7:
+    resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
     engines: {node: '>=12'}
 
   /draco3d@1.5.7:

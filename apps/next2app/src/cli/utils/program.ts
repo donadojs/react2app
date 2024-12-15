@@ -1,56 +1,7 @@
 import inquirer from "inquirer";
 import { spawn } from "node:child_process";
-
-export const PROGRAM = {
-  XCODE: "Xcode",
-  FASTLANE: "Fastlane",
-  BREW: "Brew",
-} as const;
-
-export type Program = (typeof PROGRAM)[keyof typeof PROGRAM];
-
-const programCommands: Record<
-  Program,
-  {
-    version: { command: string; args: string[] };
-    install: { command: string; args: string[] };
-  }
-> = {
-  [PROGRAM.XCODE]: {
-    version: {
-      command: "xcode-select",
-      args: ["-v"],
-    },
-    install: {
-      command: "xcode-select",
-      args: ["--install"],
-    },
-  },
-
-  [PROGRAM.BREW]: {
-    version: {
-      command: "brew",
-      args: ["-v"],
-    },
-    install: {
-      command: "/bin/bash",
-      args: [
-        "-c",
-        "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)",
-      ],
-    },
-  },
-  [PROGRAM.FASTLANE]: {
-    version: {
-      command: "fastlane",
-      args: ["-v"],
-    },
-    install: {
-      command: "brew",
-      args: ["install", "fastlane"],
-    },
-  },
-};
+import { Program, PROGRAM_COMMANDS } from "../config/programs.js";
+import { logger } from "./logger.js";
 
 export const runSpawn = (
   command: string,
@@ -94,7 +45,7 @@ export const runSpawn = (
   });
 };
 
-const promptProgramInstall = async () => {
+export const promptRequiredProgramsInstall = async () => {
   const { shouldInstall } = await inquirer.prompt([
     {
       type: "confirm",
@@ -105,50 +56,37 @@ const promptProgramInstall = async () => {
   return shouldInstall;
 };
 
-const installPrograms = async (programs: Program[]) => {
-  for (const program of programs) {
-    await runSpawn(
-      programCommands[program].install.command,
-      programCommands[program].install.args,
-      { stdio: "inherit" }
-    );
-  }
-};
-
-export const handleNotInstalledPrograms = async (
-  notInstalledPrograms: Program[]
-) => {
-  const shouldInstall = await promptProgramInstall();
-  if (shouldInstall) {
-    await installPrograms(notInstalledPrograms);
-  } else {
-    process.exit(1);
-  }
-};
-async function isProgramInstalled(program: Program) {
-  try {
-    await runSpawn(
-      programCommands[program].version.command,
-      programCommands[program].version.args,
-      { stdio: "pipe" }
-    );
-    return true;
-  } catch (error) {
-    console.log(error);
-    return false;
-  }
-}
-
-export async function getNotInstalledPrograms(requiredPrograms: Program[]) {
+export async function findMissingPrograms(requiredPrograms: Program[]) {
   const programInstallCheckResults = await Promise.all(
     requiredPrograms.map(async (program) => {
-      const isInstalled = await isProgramInstalled(program);
+      const isInstalled = await PROGRAM_COMMANDS[program].isInstalled();
       return { program, isInstalled };
     })
   );
-  const notInstalledPrograms = programInstallCheckResults
+  const missingPrograms = programInstallCheckResults
     .filter(({ isInstalled }) => !isInstalled)
     .map(({ program }) => program);
 
-  return notInstalledPrograms;
+  return missingPrograms;
 }
+
+export const ensureRequiredProgramInstalled = async (
+  requiredPrograms: Program[]
+) => {
+  logger.info("Checking required programs...");
+  const missingPrograms = await findMissingPrograms(requiredPrograms);
+  if (missingPrograms.length > 0) {
+    logger.warning(
+      `Some of the required programs are not installed. ${missingPrograms.join(", ")}`
+    );
+    const isAllowed = await promptRequiredProgramsInstall();
+    if (!isAllowed) {
+      logger.error("Please install the required programs to build.");
+      process.exit(1);
+    }
+    for (const missingProgram of missingPrograms) {
+      await PROGRAM_COMMANDS[missingProgram].install();
+    }
+  }
+  logger.success("All required programs are installed.");
+};

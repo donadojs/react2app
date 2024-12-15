@@ -52,10 +52,28 @@ platform :ios do
 end
 
 platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  desc "Submit a new Beta Build to Crashlytics Beta"
+  lane :beta do
+    gradle(task: "clean assembleRelease")
+    crashlytics
+  
+    # sh "your_script.sh"
+    # You can also use other beta testing services here
+  end
+
   desc "Build Android app"
   lane :build do
-    build_app(
-      project: "#{ENV['APP_NAME']}.aab"
-    )
+    gradle(task: "clean bundleRelease", 
+    properties: {
+      "android.injected.signing.store.file" => "#{ENV['KEYSTORE_PATH']}",
+      "android.injected.signing.store.password" => "#{ENV['KEYSTORE_PASSWORD']}",
+      "android.injected.signing.key.alias" => "#{ENV['KEY_ALIAS']}",
+      "android.injected.signing.key.password" => "#{ENV['KEY_PASSWORD']}",
+    })
   end
 end

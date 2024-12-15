@@ -21,4 +21,8 @@ export const FILE_NAMES = {
     CONFIG: "app.json",
     TEMPLATE: "@next2app/expo-template",
   },
+  ANDROID: {
+    KEYSTORE: "release.keystore",
+    KEY_ALIAS: "upload",
+  },
 } as const;

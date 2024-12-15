@@ -65,6 +65,9 @@ export const PATHS = {
     CONFIG_FILE: path.join(process.cwd(), FILE_NAMES.NEXTJS.CONFIG),
     LAYOUT_FILE: path.join(process.cwd(), "/app", FILE_NAMES.NEXTJS.LAYOUT),
   },
+  ANDROID: {
+    KEYSTORE: path.resolve(process.cwd(), FILE_NAMES.ANDROID.KEYSTORE),
+  },
   getExpoPaths: async () => {
     const expoAppName = await getExpoAppNameFromConfig();
     return {
@@ -76,6 +79,17 @@ export const PATHS = {
         expoAppName,
         FILE_NAMES.EXPO.ENV
       ),
+      ANDROID: {
+        ROOT: path.join(
+          process.cwd(),
+          DIRECTORY_NAMES.N2A,
+          expoAppName,
+          "android"
+        ),
+      },
+      IOS: {
+        ROOT: path.join(process.cwd(), DIRECTORY_NAMES.N2A, expoAppName, "ios"),
+      },
       APP_CONFIG: path.join(
         process.cwd(),
         DIRECTORY_NAMES.N2A,
