@@ -9,6 +9,7 @@ import Navigation from "./sections/Navigation";
 import HeroSection from "./sections/Hero";
 import Feature from "./ui/Feature";
 import MockDevice from "./ui/MockDevice";
+import FolderStructure from "./ui/FolderStructure";
 
 const fadeIn = {
   initial: { opacity: 0 },
@@ -37,14 +38,15 @@ const LandingPage = () => {
       <motion.div {...fadeIn}>
         <Feature
           title="1. Create a project"
-          description="Create a project and .... done"
+          description="Create a project with a well-organized folder structure"
           codeSnippet={`<span class="text-green-500">$</span> npx create-next2app my-app
 <span class="text-green-500">$</span> cd my-app
 <span class="text-green-500">$</span> npm install`}
           features={[
             {
-              title: "Automatic App-related Setup",
-              description: "You don't need to setup anything, we already did.",
+              title: "No App Setup needed",
+              description:
+                "No need to setup anything, we already did it for you",
             },
             {
               title: "Single codebase",
@@ -56,26 +58,40 @@ const LandingPage = () => {
               description: "We applied best practices for UX",
             },
           ]}
-          leftSide={<MockDevice />}
+          leftSide={
+            <div className="space-y-4">
+              <MockDevice />
+            </div>
+          }
         />
       </motion.div>
 
       <motion.div {...fadeIn}>
         <Feature
-          title="2. Start Development"
-          description="Begin building your app with modern tools and best practices"
+          title="2. Develop with Next.js"
+          description="Yup. With Next.js that you already know and love"
+          codeSnippet={`📁 my-app/
+├── 📁 app/
+│   ├── layout.tsx
+│   └── page.tsx 
+├── 📁 components/
+│   └── ...
+├── ...
+├── package.json
+└── next.config.js`}
           features={[
             {
-              title: "Type Safety",
-              description: "Full TypeScript support out of the box",
+              title: "No learning curve",
+              description: "Use your knowledge of Next.js",
             },
             {
-              title: "Modern Development",
-              description: "Hot reloading, automatic builds, and more",
+              title: "Develop what matters",
+              description: "No more app setup, develop what matters right away",
             },
             {
-              title: "Performance Optimized",
-              description: "Built-in performance optimizations for production",
+              title: "Fast development",
+              description:
+                "Use your knowledge that you already have to add feature fast",
             },
           ]}
           leftSide={<MockDevice />}
@@ -84,22 +100,22 @@ const LandingPage = () => {
 
       <motion.div {...fadeIn}>
         <Feature
-          title="3. Deploy Your App"
-          description="Deploy your application with confidence"
+          title="3. Test it with your phone"
+          description="Test your application right away on your phone"
+          codeSnippet={`<span class="text-green-500">$</span> npx next2app dev`}
           features={[
             {
-              title: "Automatic Optimization",
-              description:
-                "Built-in performance optimizations for production builds",
+              title: "Download 'next2app' app",
+              description: "Download the app from App Store or Google Play",
             },
             {
-              title: "Cross-Platform Deploy",
+              title: "Scan QR code",
               description:
-                "Deploy to web, iOS, and Android with a single command",
+                "Scan the QR code from your phone and boom! You are ready to test",
             },
             {
-              title: "CI/CD Ready",
-              description: "Seamless integration with popular CI/CD platforms",
+              title: "No more setup",
+              description: "No more setup to testing your app. It just works",
             },
           ]}
           leftSide={<MockDevice />}
@@ -108,21 +124,24 @@ const LandingPage = () => {
 
       <motion.div {...fadeIn}>
         <Feature
-          title="4. Monitor & Scale"
-          description="Keep your app running smoothly as you grow"
+          title="4. Build & Deploy"
+          codeSnippet={`<span class="text-green-500">$</span> npx next2app build`}
+          description="Build your app with a single command"
           features={[
             {
-              title: "Real-time Analytics",
+              title: "Next.js like experience",
               description:
-                "Monitor your app's performance and usage in real-time",
+                "Build your app with a single command, just like you do with Next.js",
             },
             {
-              title: "Automatic Updates",
-              description: "Push updates to your users seamlessly",
+              title: "No need to learn deployment",
+              description:
+                "We simplify deployment as much as we can. All you need to do is just follow the documentation",
             },
             {
-              title: "Scale with Confidence",
-              description: "Built to handle growth from day one",
+              title: "Detail documentation",
+              description:
+                "I know how deployment is intimidating for web developer. We have detailed documentation for you",
             },
           ]}
           leftSide={<MockDevice />}
