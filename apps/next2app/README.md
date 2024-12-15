@@ -3,18 +3,18 @@
 next2app lets you turn your React or Next.js web apps into iOS and Android mobile apps easily.
 No mobile development experience needed - just use your React skills and we'll handle the rest.
 
-## 🚧 Warning
+## Warning
 
 The most of the features are under development, so let me know if you find any bugs!
 
-## 📋 Prerequisites
+## Prerequisites
 
 - Node.js 14.0 or higher
 - npm or yarn package manager
 - Next.js project
 - iOS App Store / Google Play Store developer accounts
 
-## 🏃‍♂️ Quick Start
+## Quick Start
 
 ### 1. Start Development Server (beta)
 
@@ -62,12 +62,12 @@ module.exports = {
 };
 ```
 
-## 📚 Documentation
+## Documentation
 
 For detailed documentation, visit:
 
 - [Docs](https://next2app.com/docs)
 
-## 🐛 Issue Reporting
+## Issue Reporting
 
 Found a bug? Please report it on our [GitHub Issues](https://github.com/donadojs/next2app/issues) page.

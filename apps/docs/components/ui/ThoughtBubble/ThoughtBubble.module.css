@@ -1,0 +1,227 @@
+@keyframes bounce-up-0 {
+  0%,
+  100% {
+    transform: translate(0px, -8px);
+  }
+  50% {
+    transform: translate(0px, -6px);
+  }
+}
+
+@keyframes bounce-up-1 {
+  0%,
+  100% {
+    transform: translate(4px, -4px);
+  }
+  50% {
+    transform: translate(4px, -2px);
+  }
+}
+
+@keyframes bounce-up-2 {
+  0%,
+  100% {
+    transform: translate(8px, 0);
+  }
+  50% {
+    transform: translate(8px, 2px);
+  }
+}
+
+@keyframes bounce-down-0 {
+  0%,
+  100% {
+    transform: translate(0px, 0);
+  }
+  50% {
+    transform: translate(0px, 2px);
+  }
+}
+
+@keyframes bounce-down-1 {
+  0%,
+  100% {
+    transform: translate(4px, 4px);
+  }
+  50% {
+    transform: translate(4px, 6px);
+  }
+}
+
+@keyframes bounce-down-2 {
+  0%,
+  100% {
+    transform: translate(8px, 8px);
+  }
+  50% {
+    transform: translate(8px, 10px);
+  }
+}
+
+@keyframes wobble {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+.thought-bubble {
+  position: relative;
+  animation: wobble 4s ease-in-out infinite;
+}
+
+.cloud-fade {
+  background: radial-gradient(
+    circle at center,
+    white 60%,
+    rgba(255, 255, 255, 0.9) 70%,
+    rgba(255, 255, 255, 0.8) 80%,
+    rgba(255, 255, 255, 0.4) 90%,
+    transparent 100%
+  );
+  border: none !important;
+}
+
+.cloud-fade::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(to right, #e5e7eb, #d1d5db);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* First, let's define base dot positions */
+.dot-direction-right {
+  transform: translateX(0);
+}
+
+.dot-direction-left {
+  transform: translateX(0);
+}
+
+.dot-direction-up {
+  transform: translateY(0);
+}
+
+.dot-direction-down {
+  transform: translateY(0);
+}
+
+/* For right position with curves */
+.dot-direction-right.dot-curve-up-0 {
+  animation: bounce-up-0 2s ease-in-out infinite;
+}
+
+.dot-direction-right.dot-curve-up-1 {
+  animation: bounce-up-1 2s ease-in-out infinite 0.2s;
+}
+
+.dot-direction-right.dot-curve-up-2 {
+  animation: bounce-up-2 2s ease-in-out infinite 0.4s;
+}
+
+.dot-direction-right.dot-curve-down-0 {
+  animation: bounce-down-0 2s ease-in-out infinite;
+}
+
+.dot-direction-right.dot-curve-down-1 {
+  animation: bounce-down-1 2s ease-in-out infinite 0.2s;
+}
+
+.dot-direction-right.dot-curve-down-2 {
+  animation: bounce-down-2 2s ease-in-out infinite 0.4s;
+}
+
+/* For left position with curves */
+.dot-direction-left.dot-curve-up-0 {
+  animation: bounce-left-up-0 2s ease-in-out infinite;
+}
+
+.dot-direction-left.dot-curve-up-1 {
+  animation: bounce-left-up-1 2s ease-in-out infinite 0.2s;
+}
+
+.dot-direction-left.dot-curve-up-2 {
+  animation: bounce-left-up-2 2s ease-in-out infinite 0.4s;
+}
+
+.dot-direction-left.dot-curve-down-0 {
+  animation: bounce-down-0 2s ease-in-out infinite;
+}
+
+.dot-direction-left.dot-curve-down-1 {
+  animation: bounce-down-1 2s ease-in-out infinite 0.2s;
+}
+
+.dot-direction-left.dot-curve-down-2 {
+  animation: bounce-down-2 2s ease-in-out infinite 0.4s;
+}
+
+/* For dots without direction but with curve */
+.dot-curve-up-0:not([class*="dot-direction"]) {
+  transform: translateY(-8px);
+}
+
+.dot-curve-up-1:not([class*="dot-direction"]) {
+  transform: translateY(-4px);
+}
+
+.dot-curve-up-2:not([class*="dot-direction"]) {
+  transform: translateY(0);
+}
+
+.dot-curve-down-0:not([class*="dot-direction"]) {
+  transform: translateY(0);
+}
+
+.dot-curve-down-1:not([class*="dot-direction"]) {
+  transform: translateY(4px);
+}
+
+.dot-curve-down-2:not([class*="dot-direction"]) {
+  transform: translateY(8px);
+}
+
+@keyframes bounce-left-up-0 {
+  0%,
+  100% {
+    transform: translate(0px, -8px);
+  }
+  50% {
+    transform: translate(0px, -6px);
+  }
+}
+
+@keyframes bounce-left-up-1 {
+  0%,
+  100% {
+    transform: translate(-4px, -4px);
+  }
+  50% {
+    transform: translate(-4px, -2px);
+  }
+}
+
+@keyframes bounce-left-up-2 {
+  0%,
+  100% {
+    transform: translate(-8px, 0);
+  }
+  50% {
+    transform: translate(-8px, 2px);
+  }
+}
