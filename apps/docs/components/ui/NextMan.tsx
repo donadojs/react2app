@@ -603,7 +603,7 @@ const NextManSection = () => {
       whileInView="visible"
       viewport={{
         once: true,
-        amount: "all",
+        amount: 0.1,
       }}
       className="bg-[#f0f0f0] rounded-2xl"
     >
