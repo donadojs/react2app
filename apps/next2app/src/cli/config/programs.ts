@@ -1,4 +1,3 @@
-import inquirer from "inquirer";
 import { runSpawn } from "../utils/program.js";
 
 export const PROGRAM = {

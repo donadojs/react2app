@@ -3,9 +3,9 @@ import fs from "fs-extra";
 import { FILE_NAMES } from "../config/constants.js";
 import { PATHS } from "./path.js";
 import { runSpawn } from "./program.js";
-import dotenv from "dotenv";
 import { homedir } from "os";
 import path from "path";
+import dotenv from "dotenv";
 
 export const generateKeyStore = async (options: {
   keyStorePath: string;
