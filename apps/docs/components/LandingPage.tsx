@@ -9,7 +9,6 @@ import Navigation from "./sections/Navigation";
 import HeroSection from "./sections/Hero";
 import Feature from "./ui/Feature";
 import MockDevice from "./ui/MockDevice";
-import FolderStructure from "./ui/FolderStructure";
 
 const fadeIn = {
   initial: { opacity: 0 },

@@ -5,9 +5,9 @@ const HeroSection = () => {
   return (
     <div className="flex-1 flex items-center justify-center">
       <div className="max-w-4xl mx-auto w-full">
-        <div className="grid grid-cols-1 gap-12 md:mt-16">
-          <div className="text-center">
-            <h1 className="xs:leading-tight text-4xl mt-8 md:text-6xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-gray-900 to-gray-700 text-transparent bg-clip-text sm:leading-[1.2] dark:text-gray-300">
+        <div className="grid grid-cols-1 gap-12 md:mt-16 ">
+          <div className="flex flex-col items-center mt-8 gap-6 ">
+            <h1 className=" text-center xs:leading-tight text-4xl md:text-6xl font-extrabold tracking-tight leading-normal pb-1 bg-gradient-to-r from-gray-900 to-gray-700 text-transparent bg-clip-text sm:leading-normal dark:text-gray-300">
               The fastest way <br className="lg:hidden" />
               to build apps
               <br className="" /> for Next.js developer
