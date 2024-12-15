@@ -11,7 +11,7 @@ export default function AppLayout({
   children: React.ReactNode;
 }) {
   const navbarElement = navbar as React.ReactElement;
-  const navPaths =
+  const navPaths: string[] =
     navbarElement?.props?.tabs?.map((tab: { path: string }) => tab.path) || [];
 
   return (

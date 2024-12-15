@@ -6,11 +6,13 @@ import { isDesktop } from "react-device-detect";
 interface StackNavigationProps {
   disabled?: boolean;
   children: React.ReactNode;
+  animationDisabledUrls?: string[];
 }
 
 export default function StackNavigation({
   disabled = true,
   children,
+  animationDisabledUrls,
 }: StackNavigationProps) {
   const [isEnabled, setIsEnabled] = useState(true);
   useEffect(() => {
@@ -19,5 +21,9 @@ export default function StackNavigation({
     }
   }, []);
   if (!isEnabled) return <>{children}</>;
-  return <StackContainer>{children}</StackContainer>;
+  return (
+    <StackContainer animationDisabledUrls={animationDisabledUrls}>
+      {children}
+    </StackContainer>
+  );
 }
