@@ -18,6 +18,7 @@ export type Framework = (typeof FRAMEWORK)[keyof typeof FRAMEWORK];
 export const PLATFORM = {
   IOS: "ios",
   ANDROID: "android",
+  ALL: "all",
 } as const;
 
 export type Platform = (typeof PLATFORM)[keyof typeof PLATFORM];

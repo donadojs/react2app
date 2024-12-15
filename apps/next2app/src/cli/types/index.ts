@@ -13,6 +13,8 @@ export interface DevCommandOptions {
   host?: string; // web server host
 }
 
+export interface BuildCommandOptions {}
+
 export interface N2AConfig {
   name: string;
   ios: boolean;

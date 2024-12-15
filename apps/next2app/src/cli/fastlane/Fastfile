@@ -55,7 +55,7 @@ platform :android do
   desc "Build Android app"
   lane :build do
     build_app(
-      project: "#{ENV['APP_NAME']}.a"
+      project: "#{ENV['APP_NAME']}.aab"
     )
   end
 end
