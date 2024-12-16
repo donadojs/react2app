@@ -150,6 +150,9 @@ const LandingPage = () => {
       <motion.div {...fadeIn}>
         <FAQSection />
       </motion.div>
+      <div className="mt-16 flex justify-between">
+        © All rights reserved Common
+      </div>
     </div>
   );
 };
